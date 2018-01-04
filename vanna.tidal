@@ -1,36 +1,28 @@
-cps (30/120)
-
-let (freq, freq_p) = pF "freq" (Just 440)
-
-d1 $ stack [
-    freq "30 440 220 ~ 660" # s "superpiano" # sustain "5",
-    freq "~ 40 50 ~" # s "superpiano" # sustain "8" # pan "1 2 3",
-    freq "200" # s "supersaw" # cut "0" # gain "0.6"
-]
-
-d2 $ fast 3 $ sound "cp ~ ~ cp ~ cp"
-
-let channelMix = do v <- irand 2
-                    return $ if v == 0 then (-1) else 1
-
--- Вытащить из монады значение для использования в чистой функции.
-let channelMix2 = (\v -> if v == 0 then (-1) else 1) <$> irand 2
-
-d2 $ s "superpiano"
-    # channel channelMix
-
 -- noise wind
-d1 $ s "supernoise"
+d1 $ stack [
+  s "supernoise/2"
     # begin "0.5"
     -- # cut "-1"
-    # midinote ((irand 10) + 10)
+    # midinote ((irand 10) + 1)
     -- # accelerate "0.5"
     # channel (choose [-1,1])
     -- # bandf "5.8"
     # sustain ((irand 9) + 1)
     # accelerate rand # voice rand # pitch3 rand # slide "-0.5" # resonance rand
-    # att "5" # release "20" # room rand # size rand # orbit "1"
-    # gain (rand + 0.3)
-
-d1 $ s "superpiano supersaw"
-    # dur "1"
+    # attack "2" # release "20" # room rand # size rand # orbit "1"
+    # gain (rand + 0.2),
+  s "supermandolin/3"
+    # midinote ((irand 50) + 30)
+    # accelerate "0.5" # voice "0.7" # pitch1 "0.3"
+    # attack "1" # release "20" # room "0.5" # size "0.5" # orbit "1",
+  s "supercomparator/8"
+    # begin "-1" # cut "-1"
+    # midinote ((irand 30) + 50)
+    # sustain "8"
+    # gain (rand + 0.1)
+    # accelerate "0.8" # voice "0.7" # pitch1 "0.3"
+    # attack "1" # release "20" # room "0.5" # size "0.5" # orbit "1",
+  slow 24 $ s "supergong*16"
+    # n "[0..7]*2 [8..1]*2"
+    # midinote ((irand 10) +10)
+    ]
