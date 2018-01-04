@@ -1,0 +1,36 @@
+cps (30/120)
+
+let (freq, freq_p) = pF "freq" (Just 440)
+
+d1 $ stack [
+    freq "30 440 220 ~ 660" # s "superpiano" # sustain "5",
+    freq "~ 40 50 ~" # s "superpiano" # sustain "8" # pan "1 2 3",
+    freq "200" # s "supersaw" # cut "0" # gain "0.6"
+]
+
+d2 $ fast 3 $ sound "cp ~ ~ cp ~ cp"
+
+let channelMix = do v <- irand 2
+                    return $ if v == 0 then (-1) else 1
+
+-- Вытащить из монады значение для использования в чистой функции.
+let channelMix2 = (\v -> if v == 0 then (-1) else 1) <$> irand 2
+
+d2 $ s "superpiano"
+    # channel channelMix
+
+-- noise wind
+d1 $ s "supernoise"
+    # begin "0.5"
+    -- # cut "-1"
+    # midinote ((irand 10) + 10)
+    -- # accelerate "0.5"
+    # channel (choose [-1,1])
+    -- # bandf "5.8"
+    # sustain ((irand 9) + 1)
+    # accelerate rand # voice rand # pitch3 rand # slide "-0.5" # resonance rand
+    # att "5" # release "20" # room rand # size rand # orbit "1"
+    # gain (rand + 0.3)
+
+d1 $ s "superpiano supersaw"
+    # dur "1"
