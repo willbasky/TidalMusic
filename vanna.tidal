@@ -3,26 +3,30 @@ d1 $ stack [
   s "supernoise/2"
     # begin "0.5"
     -- # cut "-1"
-    # midinote ((irand 10) + 1)
+    # midinote ((irand 10) + 10)
     -- # accelerate "0.5"
     # channel (choose [-1,1])
     -- # bandf "5.8"
     # sustain ((irand 9) + 1)
-    # accelerate rand # voice rand # pitch3 rand # slide "-0.5" # resonance rand
-    # attack "2" # release "20" # room rand # size rand # orbit "1"
+    # accelerate rand # voice sine # pitch3 rand # slide (-sine) # resonance rand
+    # attack "2" # release "20" # room sine # size rand # orbit "1"
     # gain (rand + 0.2),
-  s "supermandolin/3"
+  s "supermandolin/3 ~ supermandolin/5 ~"
     # midinote ((irand 50) + 30)
-    # accelerate "0.5" # voice "0.7" # pitch1 "0.3"
-    # attack "1" # release "20" # room "0.5" # size "0.5" # orbit "1",
-  s "supercomparator/8"
+    # sustain "8"
+    # gain sine
+    # accelerate sine # voice sine # pitch1 sine
+    # attack "1" # release "20" # room sine # size rand # orbit "1",
+  s "supercomparator/10"
     # begin "-1" # cut "-1"
-    # midinote ((irand 30) + 50)
+    # midinote ((irand 30) + 30)
     # sustain "8"
     # gain (rand + 0.1)
-    # accelerate "0.8" # voice "0.7" # pitch1 "0.3"
-    # attack "1" # release "20" # room "0.5" # size "0.5" # orbit "1",
-  slow 24 $ s "supergong*16"
-    # n "[0..7]*2 [8..1]*2"
-    # midinote ((irand 10) +10)
+    # accelerate sine # voice "0.7" # pitch1 "0.3"
+    # attack "1" # release "20" # room sine # size sine # orbit "1",
+  jux rev $ slow 24 $ s "supergong*8 ~ supergong/5 ~ drum/3 superpiano"
+    -- # n "[0..3]*2 [8..1]*2"
+    # midinote ((irand 10) +30)
+    # gain sine
+    # sustain (irand 10)
     ]
