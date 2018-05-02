@@ -19,4 +19,11 @@ d1 $ slow 64 $ jux (|+| speed (scale 0.3 1.2 $ density 2 sine1)) $
   |+| speed (scale 0.1 1 $ density 6 sine1)
   |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3"
 
+d1 $ slowspread (slow) [34, 15, 8, 25] $ jux (|+| speed (scale 0.3 1.2 $ density 5 sine1)) $
+  (spread (striate' 500) [(1/20), (1/75), (1/50), (1/100), (1/200)] $ sound "arpy*24")
+  |+| speed (scale 0.1 1 $ density 2 sine1)
+  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3"
+
 d1 $ sound "bev"
+
+hush
