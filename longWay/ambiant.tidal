@@ -1,4 +1,4 @@
-d1 $ slow 8 $ (striate' 4400 (1/100) $ sound "bev*2")
+d1 $ slow 8 $ striate' 4400 (1/100) $ sound "bev*2"
   |+| speed (scale 0.2 12 $ density 2 sine1)
   |+| delay "0.3"
   |+| delayfeedback "0.3"
@@ -9,20 +9,20 @@ d1 $ jux (|+| speed "1.1") $ slow 13 $ striate' 4400 (1/500) $ sound "bev*2"
   |+| delayfeedback "0.3"
   |+| delaytime "0.3"
 
-d1 $ slow 12 $ jux (|+| speed (scale 0.3 1.2 $ density 2 sine1)) $
-(striate' 4400 (1/200) $ sound "bev*2")
+d1 $ slow 12 $ jux (|+| speed (scale 0.3 1.2 $ density 2 sine1))
+  (striate' 4400 (1/200) $ sound "bev*2"
   |+| speed (scale 0.1 1 $ density 6 sine1)
-  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3"
+  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3")
 
-d1 $ slow 64 $ jux (|+| speed (scale 0.3 1.2 $ density 2 sine1)) $
-  (spread (striate' 10000) [(1/50), (1/100), (1/200)] $ sound "bev")
+d1 $ slow 64 $ jux (|+| speed (scale 0.3 1.2 $ density 2 sine1))
+  (spread (striate' 10000) [1 / 50, 1 / 100, 1 / 200] $ sound "bev"
   |+| speed (scale 0.1 1 $ density 6 sine1)
-  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3"
+  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3")
 
-d1 $ slowspread (slow) [34, 15, 8, 25] $ jux (|+| speed (scale 0.3 1.2 $ density 5 sine1)) $
-  (spread (striate' 500) [(1/20), (1/75), (1/50), (1/100), (1/200)] $ sound "arpy*24")
+d1 $ slowspread slow [34, 15, 8, 25] $ jux (|+| speed (scale 0.3 1.2 $ density 5 sine1))
+  (spread (striate' 500) [1 / 20, 1 / 75, 1 / 50, 1 / 100, 1 / 200] $ sound "arpy*24"
   |+| speed (scale 0.1 1 $ density 2 sine1)
-  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3"
+  |+| delay "0.3" |+| delayfeedback "0.3" |+| delaytime "0.3")
 
 d1 $ sound "bev"
 
