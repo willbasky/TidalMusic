@@ -34,7 +34,7 @@ with numerical pattern parameters.
 
 Some functions work with multiple sets of patterns, interlace them or play them successively.
 
-## Append
+## append
 
 ~~~~haskell
 append :: Pattern a -> Pattern a -> Pattern a
