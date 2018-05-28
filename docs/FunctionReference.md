@@ -111,6 +111,10 @@ d1 $ randcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
 
 ## seqP
 
+```haskell
+seqP :: [(Time, Time, Pattern a)] -> Pattern a
+```
+
 There is a similar function named `seqP` which allows you to define when
 a sound within a list starts and ends. The code below contains three
 separate patterns in a "stack", but each has different start times 
@@ -1476,10 +1480,18 @@ use with the default SuperDirt synth or Classic Dirt:
 
 ## accelerate
 
+```haskell
+accelerate :: Pattern Double -> ParamPattern
+```
+
 a pattern of numbers that speed up (or slow down) samples while they
 play.
 
 ## bandf
+
+```haskell
+bandf :: Pattern Double -> ParamPattern
+```
 
 a pattern of numbers. In SuperDirt, this is in Hz (try a range between 0
 and 6000). In classic dirt, it is from 0 to 1. Sets the center frequency
@@ -1487,11 +1499,19 @@ of the band-pass filter. Has the shorthand `bpf`.
 
 ## bandq
 
+```haskell
+bandq :: Pattern Double -> ParamPattern
+```
+
 a pattern of numbers that set the q-factor of the band-pass filter.
 Higher values (larger than 1) narrow the band-pass. Has the shorthand
 `bpq`.
 
 ## begin
+
+```haskell
+begin :: Pattern Double -> ParamPattern
+```
 
 a pattern of numbers from 0 to 1. Skips the beginning of each sample,
 e.g. `0.25` to cut off the first quarter from each sample.
@@ -1520,10 +1540,18 @@ implementation sounds different.
 
 ## coarse
 
+```haskell
+coarse :: Pattern Int -> ParamPattern
+```
+
 fake-resampling, a pattern of numbers for lowering the sample rate, i.e.
 1 for original 2 for half, 3 for a third and so on.
 
 ## crush
+
+```haskell
+crush :: Pattern Double -> ParamPattern
+```
 
 bit crushing, a pattern of numbers from 1 for drastic reduction in
 bit-depth to 16 for barely no reduction.
@@ -1572,9 +1600,17 @@ form `lpf`.
 
 ## delayfeedback
 
+```haskell
+delayfeedback :: Pattern Double -> ParamPattern
+```
+
 a pattern of numbers from 0 to 1. Sets the amount of delay feedback.
 
 ## delay
+
+```haskell
+delay :: Pattern Double -> ParamPattern
+```
 
 a pattern of numbers that set the initial level of the delay signal.
 I.e. a value of one means the first echo will be as loud as the original
@@ -1582,19 +1618,35 @@ sound.
 
 ## delaytime
 
+```haskell
+delaytime :: Pattern Double -> ParamPattern
+```
+
 a pattern of numbers from 0 to 1. Sets the length of the delay.
 
 ## end
+
+```haskell
+end :: Pattern Double -> ParamPattern
+```
 
 the same as `begin`, but cuts the end off samples, shortening them; e.g.
 `0.75` to cut off the last quarter of each sample.
 
 ## gain
 
+```haskell
+gain :: Pattern Double -> ParamPattern
+```
+
 a pattern of numbers that specify volume. Values less than 1 make the
 sound quieter. Values greater than 1 make the sound louder.
 
 ## hcutoff
+
+```haskell
+hcutoff :: Pattern Double -> ParamPattern
+```
 
 a pattern of numbers. In SuperDirt, this is in Hz (try a range between 0
 and 8000). In classic dirt, it is from 0 to 1. Sets the center frequency
@@ -1603,10 +1655,18 @@ filter. Has the shorthand form `hpf`.
 
 ## hresonance
 
+```haskell
+hresonance :: Pattern Double -> ParamPattern
+```
+
 a pattern of numbers from 0 to 1. Applies the resonance of the high-pass
 filter. Has the shorthand form `hpq`.
 
 ## legato
+
+```haskell
+legato :: Pattern Double -> ParamPattern
+```
 
 Controls the length of the sound (called `sustain`) relative to its
 "space" in the pattern - the time from the beginning of one sound in the
@@ -2113,3 +2173,72 @@ semitones, then 3 semitones, above natural pitch.
 ```haskell
 d1 $ up "5 3" # sound "arpy"
 ```
+
+# Out of reference
+
+## e
+
+```haskell
+e :: Int -> Int -> Pattern a -> Pattern a
+```
+
+You can use the e function to apply a Euclidean algorithm over a complex pattern, although the structure of that pattern will be lost:
+
+```haskell
+d1 $ e 3 8 $ sound "bd*2 [sn cp]"
+```
+
+In the above, three sounds are picked from the pattern on the right according to the structure given by the `e 3 8`. It ends up picking two bd sounds, a cp and missing the sn entirely.
+
+These types of sequences use "Bjorklund's algorithm", which wasn't made for music but for an application in nuclear physics, which is exciting. More exciting still is that it is very similar in structure to the one of the first known algorithms written in Euclid's book of elements in 300 BC. You can read more about this in the paper [The Euclidean Algorithm Generates Traditional Musical Rhythms](http:/cgm.cs.mcgill.ca~godfriedpublicationsbanff.pdf) by Toussaint. Some examples from this paper are included below, including rotation in some cases.
+
+- (2,5) : A thirteenth century Persian rhythm called Khafif-e-ramal.
+- (3,4) : The archetypal pattern of the Cumbia from Colombia, as well as a Calypso rhythm from Trinidad.
+- (3,5,2) : Another thirteenth century Persian rhythm by the name of Khafif-e-ramal, as well as a Rumanian folk-dance rhythm.
+- (3,7) : A Ruchenitza rhythm used in a Bulgarian folk-dance.
+- (3,8) : The Cuban tresillo pattern.
+- (4,7) : Another Ruchenitza Bulgarian folk-dance rhythm.
+- (4,9) : The Aksak rhythm of Turkey.
+- (4,11) : The metric pattern used by Frank Zappa in his piece titled Outside Now.
+- (5,6) : Yields the York-Samai pattern, a popular Arab rhythm.
+- (5,7) : The Nawakhat pattern, another popular Arab rhythm.
+- (5,8) : The Cuban cinquillo pattern.
+- (5,9) : A popular Arab rhythm called Agsag-Samai.
+- (5,11) : The metric pattern used by Moussorgsky in Pictures at an Exhibition.
+- (5,12) : The Venda clapping pattern of a South African children’s song.
+- (5,16) : The Bossa-Nova rhythm necklace of Brazil.
+- (7,8) : A typical rhythm played on the Bendir (frame drum).
+- (7,12) : A common West African bell pattern.
+- (7,16,14) : A Samba rhythm necklace from Brazil.
+- (9,16) : A rhythm necklace used in the Central African Republic.
+- (11,24,14) : A rhythm necklace of the Aka Pygmies of Central Africa.
+- (13,24,5) : Another rhythm necklace of the Aka Pygmies of the upper Sangha.
+
+## e'
+
+```haskell
+e' :: Int -> Int -> Pattern a -> Pattern a
+```
+## distrib
+
+```haskell
+distrib :: [Int] -> Pattern a -> Pattern a
+```
+
+## einv
+
+```haskell
+einv :: Int -> Int -> Pattern a -> Pattern a
+```
+
+einv fills in the blanks left by e - e 3 8 "x" -> "x ~ ~ x ~ ~ x ~"
+
+einv 3 8 "x" -> "~ x x ~ x x ~ x"
+
+## efull
+
+```haskell
+efull :: Int -> Int -> Pattern a -> Pattern a -> Pattern a
+```
+
+`efull n k pa pb` stacks e n k pa with einv n k pb 

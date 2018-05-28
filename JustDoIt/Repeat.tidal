@@ -1,0 +1,107 @@
+d1 $ slow 3 $ append' (sound "~ bd:4*3 ~ ~ hh:3 ~") $ fastcat [sound "~ cp:3 ~  jvbass:3*2", sound "hh:5*3" # gain 1.5, sound "moan*2" # vowel "e" # cut "2"]
+
+solo $ d1 $ superimpose (slow 2) $ sound "bd:5 sn:4 sn:4 sn"
+solo $ d1 $ sound "bd:5 sn:4 sn:4 sn:2"
+
+solo $ d1 $ interlace (randcat [sound "jvbass*3", sound "bass", s "bass1" # cut 1]) (every 7 (rev . (fast 2)) $ sound "bd:3 hh:3" # gain "0.9")
+
+solo $ d1 $ seqP [
+  (0, 3, sound "bd bd")
+
+]
+
+cps (-1)
+cps 1.1
+
+d1 $ slow 2 $ seqPLoop [
+  (0, 12, sound "jvbass"),
+  (1, 16, interlace (randcat [sound "jvbass*3", sound "bass", s "bass1" # cut 1]) (every 7 (rev . (fast 2)) $ sound "bd:3 hh:3" # gain "0.9")),
+  (12, 16, slow 3 $ append' (sound "~ bd:4*3 ~ ~ hh:3 ~") $ fastcat [sound "~ cp:3 ~  jvbass:3*2", sound "hh:5*3" # gain 1.5, sound "moan" # cut "2"])
+]
+
+d1 $ weave 16 (pan sine) [
+  whenmod 1 3 (striate 4) $ sound "~ bn:5(3,4) ~ bass:1" # gain "1.2",
+  superimpose rev $ sound "cn:5 ~ jvbass:4",
+  spin 2 $ every 3 rev $ s "hmm hmm" # gain "0.7" # vowel "a o"
+  ]
+
+d1 $ weave 16 (pan sine)
+    [sound "bd sn cp",
+     sound "casio casio:1",
+     sound "[jvbass*2 jvbass:2]/2",
+     sound "hc*4"
+    ]
+
+d1 $ chunk 4 (fast 2) $ s "[rs(3 5,8, <0 2>), bd*2, ~ sn*2]"
+  # pan "0.5"
+
+d2 $ off 0.25 (# speed 2) $ jux rev $ iter 4 $ chop 8 $ s "~ bd*2"
+
+solo $ d3 $ jux rev $ note (off 0.125 (+12) $ off 0.25 (+7) $ "<c(3,8) e*2 f(2,8,2) g*2>")
+  # sound "jvbass"
+  # legato 1
+  # gain 0.85
+  # lpf 200
+  # lpq 0.1
+  # orbit 2
+  # room 0.3
+  # size 0.8
+  # speed 2
+
+d4 $ off 0.25 (# s "pulse") $ jux rev $ n (off 0.25 (+12) $ off 0.125 (+7) $ "<c7(3,8) e7(3,8,<2 4>) f7(3,8) g7*2>") # s "jvbass"
+  # lpf 1000
+  # lpq 0.1
+
+d5 $ slow 3 $ interlace (s "amencutup [~ arpy:4]/3" # lpf 500 # lpq 0.3 # cut "1") (s "bd:5 ~ bd*2, hh:3 ~")
+
+solo $ d1 $ weave 16 (sound "jvbass*8" # n (run 16))
+  [
+    vowel "a e i",
+    vowel "i [i o] o u",
+    vowel "[e o]/3 [i o u]/2",
+    speed "0.5 1 2"
+  ]
+
+solo $ d1 $ spin 2 $ wedge (1/7)
+  (weave' 24 (sound "jvbass:3(3,5), jvbass:5(3,5) [cp hh]")
+    [(# speed "0.5 1 2"), (# gain 2), (# legato 3)])
+  (slow 2 $ striate' 5 (1/5) $ weave 6 (sound "odx:3 [bd ~]")
+    [speed "1 -1", gain "0.5", room "0.5"])
+
+d1 $ slow 3 $ wedge (1/4) (sound "bd*2" # room (sine + 0.5)) (foldEvery [3, 4, 5] (rev) $ sound "[feel future]*2 ~ ~ e:2 ~ <v:1 v:2 v:3>")
+
+d1 $ ifp ((== 0).(flip mod 2))
+  (slow 2 . jux (fast 2) . chop 20 . striate 10)
+  (# coarse "24 48" ) $
+  sound "hh:2 hc:4 hc:2"
+
+d1 $ slow 3 $ chop 24 $ sound "[[rave:3 rave:2] rave:4]" # legato "2"
+
+d1 $ s (mask ("~ 1 ~ ~ 1 ~ ~ 1 ~ 1 1" :: Pattern Bool)
+  (cat ["sn*8", "[cp*4 bd*4, bass*5]"] ))
+  # n (run 8)
+
+cps 1
+
+solo $ d1 $ slow 1 $ efull 4 9 (s "jazz") (s "bd:1" # lpf 2000 # lpq 0.3)
+
+d1 $ distrib [100, 700] $ s "bd hh"
+
+d1 $ compressTo (2,5) $ s "rave:4"
+
+d1 $ sound "bev*8" # begin "-1" # cut "1" # coarse "1 2 4 8 16 32 64 128"
+
+d1 $ (chop 8 $ sound "breaks125") # coarse "1 2 4 8 16 32 64 128"
+
+d1 $ s "breaks125"
+
+d1 $ rarely (jux (stut 2 1 (- 0.5))) $
+  stack [
+        sound "bd",
+        sound "[[cp cp] ~ cp ~]",
+        sound "~ ~ sd ~",
+        sound "hh(3,8)"]
+
+d1 $ striate 16 $ sound "bd*3? dr2" # n "2? 3 1 2"
+
+hush
