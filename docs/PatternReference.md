@@ -7,7 +7,7 @@ second number of steps:
 ```haskell
 d1 $ sound "bd(5,8)"
 ```
- 
+
 You can also use the `e` function to do this. `e` takes the same two
 arguments as what is used in the parenthesis above:
 
@@ -488,9 +488,8 @@ d1 $ every 8 (rev) $ every 4 (density 2) $ sound "bd hh sn cp"
 ```
 
 ~~~haskell
-d1 $ whenmod 16 14 (# speed "2") $ sound "bd
-arpy*2 cp bass2 
-~~~ 
+d1 $ whenmod 16 14 (# speed "2") $ sound "bd arpy*2 cp bass2"
+~~~
 
 However, what if you wanted to conditionally replace the pattern with a
 new one? You can use the `const` function to completely replace a
@@ -810,11 +809,11 @@ d1 $ sound "[bd sn]*2 cp"
 
 ~~~haskell
 d1 $ sound "[bd sn] cp/2"
-~~~ 
-~~~haskell 
-d1 $ sound "[[bd sn] cp]*2" -- speeds up the entire pattern by 2 
-~~~ 
-~~~haskell 
+~~~
+~~~haskell
+d1 $ sound "[[bd sn] cp]*2" -- speeds up the entire pattern by 2
+~~~
+~~~haskell
 d1 $ sound "[[bd sn] cp]/2" -- slows down the entire pattern by 2
 ~~~
 
@@ -825,10 +824,10 @@ rhythms:
 d1 $ sound "[bd sn sn*3]/2 [bd sn*3 bd*4]/3"
 ```
 
-~~~haskell 
+~~~haskell
 d1 $ sound "[bd [sn sn]*2]/2 [bd [sn
-bd]/2]*2" 
-~~~ 
+bd]/2]*2"
+~~~
 
 # Rests
 
@@ -853,9 +852,9 @@ effects to aid in automatically generating a linear pattern:
 d1 $ sound "arpy*8" # up (run 8)
 ```
 
-~~~haskell 
-d1 $ sound "arpy*8" # speed (run 8) 
-~~~ 
+~~~haskell
+d1 $ sound "arpy*8" # speed (run 8)
+~~~
 
 In the above we're specifying the number of sounds twice - in the
 `sound` pattern as well as the `up` or `speed` pattern. There's actually
@@ -1255,7 +1254,7 @@ d1 $ sound "arpy" # speed "2"
 Just like other effects, you can specify a pattern for speed:
 
 ```haskell
-d1 $ speed "1 0.5 2 1.5" # sound "arpy" 
+d1 $ speed "1 0.5 2 1.5" # sound "arpy"
 ```
 
 You can also reverse a sample by specifying negative values:
@@ -1373,106 +1372,106 @@ documentation, see `default-synths.scd`, but here are some examples to
 try:
 
 ```haskell
-d1 $ jux (# accelerate "-0.1") $ s "supermandolin*8" 
+d1 $ jux (# accelerate "-0.1") $ s "supermandolin*8"
     # midinote "[80!6 78]/8"
     # sustain "1 0.25 2 1"
 ```
 
 ```haskell
-d1 $ midinote (slow 2 $ (run 8) * 7 + 50) 
+d1 $ midinote (slow 2 $ (run 8) * 7 + 50)
     # s "supergong" # decay "[1 0.2]/4"
-    # voice "[0.5 0]/8" 
+    # voice "[0.5 0]/8"
     # sustain (slow 16 $ scale 5 0.5 $ saw1)
 ```
 
 ```haskell
-d1 $ sound "superhat:0*8" 
-    # sustain "0.125!6 1.2" 
+d1 $ sound "superhat:0*8"
+    # sustain "0.125!6 1.2"
     # accelerate "[0.5 -0.5]/4"
 ```
 
 ```haskell
-d1 $ s "super808 supersnare" 
+d1 $ s "super808 supersnare"
     # n (irand 5)
-    # voice "0.2" 
-    # decay "[2 0.5]/4" 
-    # accelerate "-0.1" 
-    # sustain "0.5" 
+    # voice "0.2"
+    # decay "[2 0.5]/4"
+    # accelerate "-0.1"
+    # sustain "0.5"
     # speed "[0.5 2]/4"
 ```
 
 ```haskell
-d1 $ n (slow 8 "[[c5 e5 g5 c6]*4 [b4 e5 g5 b5]*4]") 
+d1 $ n (slow 8 "[[c5 e5 g5 c6]*4 [b4 e5 g5 b5]*4]")
     # s "superpiano"
     # velocity "[1.20 0.9 0.8 1]"
 ```
 
 ```haskell
-d1 $ n (slow 8 $ "[[c4,e4,g4,c5]*4 [e4,g4,b5,e5]*4]" + "<12 7>") 
+d1 $ n (slow 8 $ "[[c4,e4,g4,c5]*4 [e4,g4,b5,e5]*4]" + "<12 7>")
     # s "superpiano"
-    # velocity (slow 8 $ scale 0.8 1.1 sine1) 
+    # velocity (slow 8 $ scale 0.8 1.1 sine1)
     # sustain "8"
 ```
 
 ```haskell
-d1 $ n "[c2 e3 g4 c5 c4 c3]/3" 
+d1 $ n "[c2 e3 g4 c5 c4 c3]/3"
     # s "[superpwm supersaw supersquare]/24" # sustain "0.5"
-    # voice "0.9" 
-    # semitone "7.9" 
-    # resonance "0.3" 
-    # lfo "3" 
-    # pitch1 "0.5" 
+    # voice "0.9"
+    # semitone "7.9"
+    # resonance "0.3"
+    # lfo "3"
+    # pitch1 "0.5"
     # speed "0.25 1"
 ```
 
 ```haskell
 d1 $ every 16 (density 24 . (|+| midinote "24") . (# sustain "0.3") . (# attack "0.05"))
-  $ s "supercomparator/4" 
+  $ s "supercomparator/4"
     # midinote ((irand 24) + 24)
-    # sustain "8" 
-    # attack "0.5" 
-    # hold "4" 
+    # sustain "8"
+    # attack "0.5"
+    # hold "4"
     # release "4"
-    # voice "0.5" 
-    # resonance "0.9" 
-    # lfo "1" 
-    # speed "30" 
+    # voice "0.5"
+    # resonance "0.9"
+    # lfo "1"
+    # speed "30"
     # pitch1 "4"
 ```
 
 ```haskell
-d1 $ n "[c2 e3 g4 c5 c4 c3]*4/3" 
-    # s "superchip" 
+d1 $ n "[c2 e3 g4 c5 c4 c3]*4/3"
+    # s "superchip"
     # sustain "0.1"
-    # pitch2 "[1.2 1.5 2 3]" 
+    # pitch2 "[1.2 1.5 2 3]"
     # pitch3 "[1.44 2.25 4 9]"
-    # voice (slow 4 "0 0.25 0.5 0.75") 
-    # slide "[0 0.1]/8" 
+    # voice (slow 4 "0 0.25 0.5 0.75")
+    # slide "[0 0.1]/8"
     # speed "-4"
 ```
 
-~~~haskell 
+~~~haskell
 d2 $ every 4 (echo (negate 3/32)) $ n "c5*4"
     # s "supernoise"        
-    # accelerate "-2" 
-    # speed "1" 
+    # accelerate "-2"
+    # speed "1"
     # sustain "0.1 ! ! 1"
-    # voice "0.0" 
-~~~ 
+    # voice "0.0"
+~~~
 
 ```haskell
-d1 $ s "supernoise/8" 
-    # midinote ((irand 10) + 30) 
+d1 $ s "supernoise/8"
+    # midinote ((irand 10) + 30)
     # sustain "8"
-    # accelerate "0.5" 
-    # voice "0.5" 
-    # pitch1 "0.15" 
-    # slide "-0.5" 
+    # accelerate "0.5"
+    # voice "0.5"
+    # pitch1 "0.15"
+    # slide "-0.5"
     # resonance "0.7"
-    # attack "1" 
-    # release "20" 
-    # room "0.9" 
-    # size "0.9" 
+    # attack "1"
+    # release "20"
+    # room "0.9"
+    # size "0.9"
     # orbit "1"
 ```
 

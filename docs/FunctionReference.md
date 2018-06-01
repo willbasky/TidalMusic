@@ -62,7 +62,7 @@ d1 $ append' (sound "bd*2 sn") (sound "arpy jvbass*2")
 fastcat :: [Pattern a] -> Pattern a
 ~~~~
 
-`fastcat` concatenates a list of patterns into a new pattern. The new pattern's length will 
+`fastcat` concatenates a list of patterns into a new pattern. The new pattern's length will
 be a single cycle. Note that the more patterns you add to the list, the faster each pattern
 will be played so that all patterns can fit into a single cycle. Examples:
 
@@ -117,13 +117,13 @@ seqP :: [(Time, Time, Pattern a)] -> Pattern a
 
 There is a similar function named `seqP` which allows you to define when
 a sound within a list starts and ends. The code below contains three
-separate patterns in a "stack", but each has different start times 
+separate patterns in a "stack", but each has different start times
 (zero cycles, eight cycles, and sixteen cycles, respectively). In the example, ll patterns stop after 12 cycles:
 
 ~~~~ haskell
-d1 $ seqP [ 
-  (0, 12, sound "bd bd*2"), 
-  (4, 12, sound "hh*2 [sn cp] cp future*4"), 
+d1 $ seqP [
+  (0, 12, sound "bd bd*2"),
+  (4, 12, sound "hh*2 [sn cp] cp future*4"),
   (8, 12, sound (samples "arpy*8" (run 16)))
 ]
 ~~~~
@@ -133,9 +133,9 @@ If you run the above, you probably won't hear anything. This is because cycles s
 You can reset the cycle clock back to zero by running `cps (-1)` followed by `cps 1`, or whatever tempo you want to restart at. Alternatively, you can shift time for the seqP pattern back to zero like this:
 
 ~~~~ haskell
-d1 $ (pure now) ~> seqP [ 
-  (0, 12, sound "bd bd*2"), 
-  (4, 12, sound "hh*2 [sn cp] cp future*4"), 
+d1 $ (pure now) ~> seqP [
+  (0, 12, sound "bd bd*2"),
+  (4, 12, sound "hh*2 [sn cp] cp future*4"),
   (8, 12, sound (samples "arpy*8" (run 16)))
 ]
 ~~~~
@@ -143,9 +143,9 @@ d1 $ (pure now) ~> seqP [
 A third option is to use `seqPLoop` instead, which will keep looping the sequence when it gets to the end:
 
 ~~~~haskell
-d1 $ (pure now) ~> seqPLoop [ 
-  (0, 12, sound "bd bd*2"), 
-  (4, 12, sound "hh*2 [sn cp] cp future*4"), 
+d1 $ (pure now) ~> seqPLoop [
+  (0, 12, sound "bd bd*2"),
+  (4, 12, sound "hh*2 [sn cp] cp future*4"),
   (8, 12, sound (samples "arpy*8" (run 16)))
 ]
 ~~~~
@@ -156,7 +156,7 @@ d1 $ (pure now) ~> seqPLoop [
 cat :: [Pattern a] -> Pattern a
 ~~~~
 
-`cat`, (also known as `slowcat`) concatenates a list of patterns into a new pattern; each pattern in the list will maintain its 
+`cat`, (also known as `slowcat`) concatenates a list of patterns into a new pattern; each pattern in the list will maintain its
 original duration. `cat` is similar to `fastcat`, except that pattern lengths are not changed. Examples:
 
 ~~~~haskell
@@ -193,20 +193,20 @@ stack :: [Pattern a] -> Pattern a
 playing all of the patterns in the list simultaneously.
 
 ~~~~ haskell
-d1 $ stack [ 
-  sound "bd bd*2", 
-  sound "hh*2 [sn cp] cp future*4", 
+d1 $ stack [
+  sound "bd bd*2",
+  sound "hh*2 [sn cp] cp future*4",
   sound (samples "arpy*8" (run 16))
 ]
 ~~~~
 
-This is useful if you want to use a transform or synth parameter on the entire 
+This is useful if you want to use a transform or synth parameter on the entire
 stack:
 
 ~~~~ haskell
-d1 $ whenmod 5 3 (striate 3) $ stack [ 
-  sound "bd bd*2", 
-  sound "hh*2 [sn cp] cp future*4", 
+d1 $ whenmod 5 3 (striate 3) $ stack [
+  sound "bd bd*2",
+  sound "hh*2 [sn cp] cp future*4",
   sound (samples "arpy*8" (run 16))
 ] # speed "[[1 0.8], [1.5 2]*2]/3"
 ~~~~
@@ -315,7 +315,7 @@ Also, see `whenmod`.
 foldEvery :: [Int] -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
 ~~~~
 
-`foldEvery` transforms a pattern with a function, but only for the given number of repetitions. 
+`foldEvery` transforms a pattern with a function, but only for the given number of repetitions.
 It is similar to chaining multiple `every` functions together.
 
 Example:
@@ -368,17 +368,17 @@ If we apply a mask to it
 ~~~haskell
 d1 $ s (mask ("1 1 1 ~ 1 1 ~ 1" :: Pattern Bool)
   (cat ["sn*8", "[cp*4 bd*4, bass*5]"] ))
-  # n (run 8) 
+  # n (run 8)
 ~~~
 
-Due to the use of `cat` here, the same mask is first applied to `"sn*8"` and in the next cycle to `"[cp*4 bd*4, hc*5]".
+Due to the use of `cat` here, the same mask is first applied to `"sn*8"` and in the next cycle to `"[cp*4 bd*4, hc*5]"`.
 
 You could achieve the same effect by adding rests within the `cat` patterns, but mask allows you to do this more easily. It kind of keeps the rhythmic structure and you can change the used samples independently, e.g.
 
 ~~~haskell
 d1 $ s (mask ("1 ~ 1 ~ 1 1 ~ 1" :: Pattern Bool)
   (cat ["can*8", "[cp*4 sn*4, jvbass*16]"] ))
-  # n (run 8) 
+  # n (run 8)
 ~~~
 
 Detail: It is currently needed to explicitly _tell_ Tidal that the mask itself is a `Pattern Bool` as it cannot infer this by itself, otherwise it will complain as it does not know how to interpret your input.
@@ -391,8 +391,8 @@ someCyclesBy :: Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
 
 Similar to `sometimesBy`, but applies/doesn't apply a function on a cycle-by-cycle
 basis instead of event by event.
-Use `someCyclesBy` to apply a given function for some cycles, but not for others. 
-For example, the 
+Use `someCyclesBy` to apply a given function for some cycles, but not for others.
+For example, the
 following code results in `fast 2` being applied for about 25% of all cycles:
 
 ~~~~ haskell
@@ -411,7 +411,7 @@ someCycles = someCyclesBy 0.5
 sometimesBy :: Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
 ~~~~
 
-Use `sometimesBy` to apply a given function "sometimes". For example, the 
+Use `sometimesBy` to apply a given function "sometimes". For example, the
 following code results in `fast 2` being applied about 25% of the time:
 
 ~~~~ haskell
@@ -437,7 +437,7 @@ swingBy::Time -> Time -> Pattern a -> Pattern a
 ~~~~
 
 The function `swingBy x n` breaks each cycle into `n` slices, and then delays events in the second half of each slice by
-the amount `x`, which is relative to the size of the (half) slice. So if `x` is `0` it does nothing, `0.5` delays for 
+the amount `x`, which is relative to the size of the (half) slice. So if `x` is `0` it does nothing, `0.5` delays for
 half the "note" duration, and `1` will wrap around to doing nothing again.
 The end result is a shuffle or swing-like rhythm.  For example
 
@@ -471,7 +471,7 @@ The above will only apply `striate 4` to the pattern if the current cycle number
 whenmod :: Int -> Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
 ~~~~
 
-`whenmod` has a similar form and behavior to `every`, but requires an 
+`whenmod` has a similar form and behavior to `every`, but requires an
 additional number. Applies the function to the pattern, when the
 remainder of the current loop number divided by the first parameter,
 is greater or equal than the second parameter.
@@ -508,11 +508,11 @@ d1 $ within (0.75, 1) (# speed "0.5") $ sound "bd*2 sn lt mt hh hh hh hh"
 
 The general rule for things that combine patterns is that they use the structure of the pattern on the *left*.
 
-#### `|+|`, `|*|`, `|-|`, `|/|` 
+#### `|+|`, `|*|`, `|-|`, `|/|`
 Operate on *ParamPatterns*, and perform the arithmetic operation if the two parameters are the same (such as `speed` and `speed`), or simply merge the parameters just as `#` would if the parameters are different.
 
 ~~~~ haskell
-speed "1 2 3 4" |+| speed "2" 
+speed "1 2 3 4" |+| speed "2"
 ~~~~
 
 is the same as
@@ -551,7 +551,7 @@ Pattern replacement: takes the elements of the second pattern and makes a new pa
 "x x x" <~> "bd sn"
 ~~~~
 
-is the same as 
+is the same as
 
 ~~~~ haskell
 "bd sn bd"
@@ -671,11 +671,11 @@ Make a pattern sound a bit like a breakbeat. It does this by every other
 cycle, squashing the pattern to fit half a cycle, and offsetting it by a
 quarter of a cycle.
 
-Example: 
-~~~~ haskell 
+Example:
+~~~~ haskell
 d1 $ brak $ sound "[feel feel:3, hc:3 hc:2
-hc:4 ho:1]" 
-~~~~ 
+hc:4 ho:1]"
+~~~~
 
 ## degrade
 
@@ -1587,7 +1587,7 @@ d1 $ sound "[bev, [ho:3](3,8)]" # cut "-1"
 
 Using `cut "0"` is effectively *no* cutgroup.
 
-## cutoff 
+## cutoff
 
 ```haskell
 cutoff :: Pattern Double -> ParamPattern
@@ -1725,6 +1725,68 @@ d1 $ stack [
 
 Low values will give a more *human* feeling, high values might result in
 quite the contrary.
+
+You can use nudge to move the timing of events into the future. Here, we schedule each of the four cp samples with future times of 0, 0.7, 0.2, and 0.4 seconds, respectively:
+
+```haskell
+d1 $ sound "cp*4" # nudge "0 0.7 0.2 0.4"
+	
+d1 $ sound "cp*4" # nudge "0 0.7 0.2 0.4"
+```
+
+The above example isn’t very interesting. However, when you apply a sine function to nudge, you can make time appear to stretch in a smooth way:
+
+```haskell
+d1 $ sound "cp*4" # nudge (slow 8 $ sine)
+	
+d1 $ sound "cp*4" # nudge (slow 8 $ sine)
+```
+
+Different pattern densities, scaling, and sine speeds interact with each other to create different results:
+
+```haskell
+d1 $ sound "cp*8" # nudge (scale 0 2 $ slow 16 $ sine)
+	
+d1 $ sound "cp*8" # nudge (scale 0 2 $ slow 16 $ sine)
+```
+
+## spaceOut
+
+The spaceOut function lets you specify a list of cycle speed multipliers, and then plays the pattern exactly once at each speed:
+
+```haskell
+d1 $ spaceOut [1, 0.5, 1.33, 0.1, 2] $ sound "cp*4 cp*2"
+	
+d1 $ spaceOut [1, 0.5, 1.33, 0.1, 2] $ sound "cp*4 cp*2"
+```
+
+The above code will play the `cp*4 cp*2` pattern at 1, then 0.5, 1.33, 0.1, and 2 times the normal cycle speed.
+
+Where spaceOut gets a little more interesting is when you use Haskell’s list syntax to build longer lists of linear (or non-linear) values. Consider this spaceOut pattern that plays at speeds ranging from 1 to 3, incrementing by 0.1:
+
+```haskell
+d1 $ spaceOut [1,1.1..3] $ sound "cp*4"
+	
+d1 $ spaceOut [1,1.1..3] $ sound "cp*4"
+```
+
+The above pattern has 30 different speeds (!) but with very little code.
+
+You can achieve speed “oscillations” that resemble a triangle wave by adding two lists together with the `++` operator:
+
+```haskell
+d1 $ spaceOut ([0.1,0.2..3] ++ [3,2.9..0.1]) $ sound "cp*4"
+	
+d1 $ spaceOut ([0.1,0.2..3] ++ [3,2.9..0.1]) $ sound "cp*4"
+```
+
+You can use many different Haskell features to build lists. Here is a different method that constructs lists of fractional values using map:
+
+```haskell
+d1 $ spaceOut (map (1/) [1,1.5..10]) $ sound "cp*4"
+
+d1 $ spaceOut (map (1/) [1,1.5..10]) $ sound "cp*4"
+```
 
 ## pan
 
@@ -1955,9 +2017,9 @@ the given integer is zero.
 mortal :: Time -> Time -> Time -> [ParamPattern] -> ParamPattern
 ```
 
-Degrade the new pattern over time until it ends in silence 
+Degrade the new pattern over time until it ends in silence
 
-## superwash 
+## superwash
 
 ```haskell
 superwash :: (Pattern a -> Pattern a) -> (Pattern a -> Pattern a) -> Time -> Time -> Time -> Time -> [Pattern a] -> Pattern a
@@ -1977,7 +2039,7 @@ Note that after one cycle `# accelerate "4 2 -2 -4"` is applied to
 `sound "feel*4 [feel:2 sn:2]"` for 4 cycles and then the whole pattern
 is replaced by `sound "bd [odx:2 sn/2]"` and `striate 2` is applied to
 it for 6 cycles. Afterwards `sound "bd [odx:2 sn/2]"` is played
-normally. 
+normally.
 
 ## wait
 
@@ -1985,7 +2047,7 @@ normally.
 wait :: Time -> Time -> [ParamPattern] -> ParamPattern
 ```
 
-Just stop for a bit before playing new pattern 
+Just stop for a bit before playing new pattern
 
 ## wash
 
@@ -2004,7 +2066,7 @@ t1 (wash (chop 8) 4) $ sound "feel*4 [feel:2 sn:2]"
 
 Note that `chop 8` is applied to `sound "feel ! feel:1 feel:2"` for 4
 cycles and then the whole pattern is replaced by
-`sound "feel*4 [feel:2 sn:2]` 
+`sound "feel*4 [feel:2 sn:2]`
 
 ## xfade
 
@@ -2150,7 +2212,7 @@ d1 $ jux (iter 4) $ sound "arpy arpy:2*2"
 ```
 
 `scalex` is an exponential version of `scale`, good to use for
-frequencies. For example, `scale 20 2000 "0.5"` will give `1010` -
+frequencies. For example, `scale 20 2000 "0.slow5"` will give `1010` -
 halfway between `20` and `2000`. But `scalex 20 2000 0.5` will give
 `200` - halfway between on a *logarithmic* scale. This usually sounds
 better if you're using the numbers as pitch frequencies. Since `scalex`
@@ -2241,4 +2303,51 @@ einv 3 8 "x" -> "~ x x ~ x x ~ x"
 efull :: Int -> Int -> Pattern a -> Pattern a -> Pattern a
 ```
 
-`efull n k pa pb` stacks e n k pa with einv n k pb 
+`efull n k pa pb` stacks e n k pa with einv n k pb
+
+## chunk
+
+```haskell
+chunk :: Integer -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
+```
+
+chunk n f p treats the given pattern p as having n chunks, and applies the function f to one of those sections per cycle, running from left to right.
+
+```haskell
+d1 $ chunk 4 (density 4) $ sound "cp sn arpy [mt lt]"
+```
+
+## chunk'
+
+```haskell
+chunk' :: Integral a => a -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
+```
+
+chunk' works much the same as chunk, but runs from right to left.
+
+## smash
+```haskell
+smash :: Pattern Int -> [Pattern Time] -> ParamPattern -> Pattern ParamMap
+```
+Smash is a combination of spread and striate - it cuts the samples into the given number of bits, and then cuts between playing the loop at different speeds according to the values in the list.
+
+So this:
+```haskell
+d1 $ smash 3 [2,3,4] $ sound "ho ho:2 ho:3 hc"
+```
+Is a bit like this:
+```haskell
+d1 $ spread (slow) [2,3,4] $ striate 3 $ sound "ho ho:2 ho:3 hc"
+```
+This is quite dancehall:
+```haskell
+d1 $ (spread' slow "1%4 2 1 3" $ spread (striate) [2,3,4,1] $ sound
+"sn:2 sid:3 cp sid:4")
+  # speed "[1 2 1 1]/2"
+```
+
+## smash'
+```haskell
+smash' :: Int -> [Pattern Time] -> ParamPattern -> Pattern ParamMap
+```
+an altenative form to `smash` is `smash'` which will use `chop` instead of `striate`.
