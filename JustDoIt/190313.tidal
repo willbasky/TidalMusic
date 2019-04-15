@@ -1,0 +1,9 @@
+
+
+p "sample" $ every 2 (jux rev) $ slow 2 $ s "bd*5 [hh hh:2 superpiano]"
+
+p "1" $ jux rev $ degrade $ s "arpy:3 cp wind"
+
+p "2" $ slow 1 $ s "cp bd*2"
+    -- # speed 3
+    -- # hpf 1000

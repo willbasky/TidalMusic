@@ -1,0 +1,18 @@
+
+
+vis "fg" $ s "bd sn" # vowel "a i"
+
+vis "" $ s "bd ~ bd ~ ~ bd"
+
+-- Show pattern
+outPat <- readMVar $ sOutput tidal
+
+strPat = showPattern (Arc 0 1) outPat
+
+-- isEmpty pattern?
+bool <- isEmptyMVar $ sOutput tidal
+strPat = B8.pack $ show bool
+
+-- strPat = B8.pack "Tanya"
+
+hoscClient outPat

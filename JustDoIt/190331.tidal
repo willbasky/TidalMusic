@@ -1,0 +1,78 @@
+
+
+
+p "piano" $ s "session:5"
+    # cut 1
+
+p "open" $ s "session:4"
+
+p "drone" $ s "session:3"
+    # cut 1
+
+p "close" $ s "session:2"
+
+p "flute" $ s "session:1"
+    # cut 1
+
+p "drums" $ s "session"
+
+p "piano" $ silence
+p "open" $ silence
+p "close" $ silence
+p "drone" $ silence
+p "flute" $ silence
+p "drums" $ silence
+
+
+p "rythm"
+    $ slow 2
+    -- $ brak
+    $ degradeBy 0.1
+    -- $ ghost
+    -- $ rot "<3 2>"
+    -- $ ((* pan sine))
+    $ ((/ speed (1 + sine)) . ply 2)
+    -- $ struct "t*2 t f t f "
+    $ n "[2 ~ 4 2] ~ [4 2 2] ~ 2 ~ ~"
+    # s "session"
+    # speed 0.5 -- (slow 3 $ range 0.7 1.4 sine)
+    # gain (slow 2 $ range 1 1 sine)
+    # pan (slow 3 $ range 0 1 sine)
+    # lpf 700
+
+p "rythm" $ silence
+
+p "pia"
+    $ slow 4
+    $ degradeBy 0.1
+    -- $ stut 7 0.5 2
+    $ stutWith 5 (1/5) (# vowel "{a e i o u}%2")
+    -- $ brak
+    -- $ every 3 (jux brak)
+    -- $ struct "[t f t] f t*2 [t*4 f t]"
+    -- $ ((* speed (1 + sine)) . ply 8)
+    $ loopAt (range 3 6 $ irand 6 + 1) $ chop (range 12 24 $ round <$> sine)
+    $ ply "<5 7>"
+    -- $ gap 12
+    -- $ striateBy 1400 (1/300)
+    $ n "1"
+    # s "session"
+    # gain (slow 3 $ range 0.8 1 sine)
+    # pan (slow 3 $ range 0 1 sine)
+    # cut 5
+    -- # lpf 1000
+
+p "pia" $ silence
+
+p "drosha"
+    $ slow 5
+    $ (/ speed (1 + sine))
+    $ stutWith 6 (1/6) (# vowel "{a e i o u}%2")
+    -- $ gap 3
+    $ n "3"
+    # s "session"
+    # lpf (range 1000 2000 sine)
+    # gain (slow 3 $ range 0.8 1 sine)
+    -- # delay 0.7
+
+p "drosha" $ silence

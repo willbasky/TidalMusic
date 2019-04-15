@@ -1,0 +1,57 @@
+setcps 1
+
+d1 $ slow 6
+    $ every 3 (jux rev)
+    $ stut 4 0.5 0.1
+    $ shuffle 3
+    -- $ every 3 (iter' 3)
+    -- $ iter 8
+    $ degradeBy 0.3
+    $ struct "t ~ t? ~ t t ~ t ~? ~ t ~ ~"
+    $ s "gretsch:8(3,5)? glitch2:1(4,9) glitch2:2"
+    # lpf "<1000 1100 1500>"
+    -- # delayfeedback 1
+
+d1 $ silence
+
+d3 $ slow 2
+    $ degradeBy 0.2
+    $ iter 4
+    $ stack [
+        sound "bd bd/4",
+        sound "hh(5,8)"
+    ]
+    # nudge "[0 0.4]*4"
+    # lpf "<1100 1000 1200 1300>"
+
+d3 $ silence
+
+d2 $ slow 15
+    $ degradeBy 0.5
+    $ stut 4 0.5 0.1
+    $ s "<koy koy:2>"
+    # hresonance "<0 0.2 0.4 0.6>"
+    # lpf "<1200 1000 1500>"
+    -- # shape perlin
+
+d2 $ silence
+
+g $ sound "[bass3, [arpy:1 arpy:2 arpy:3]]"
+
+d1 $ n "[-10 .. -17] [-3 .. 1]" # sound "superpiano"
+
+g $ slow 3 $ randslice 5 $ s "bev" # speed "0.1"
+    # cut "-1"
+
+g $ slow 1
+    -- $ randslice 5
+    $ sound "casio e perk"
+    # cut "-1"
+    # lpf "1000"
+    # n (run 5)
+    -- # hresonance "0 0.2 0.4 0.6"
+    -- # speed 0.1
+    -- # delay 0.9
+    -- # kriole 12
+    -- # lfo 0.1
+    -- # harmonic "1 2 3"

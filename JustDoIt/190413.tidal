@@ -1,0 +1,54 @@
+p "rythm"
+    $ slow 3
+    $ sometimesBy 0.4 (# speed 0.5)
+    $ iter 3
+    $ every 5 (jux id)
+    $ slice 100 "23/3 [90 2?]/2 50"
+    $ s "ses02"
+    # legato 1
+
+p "rythm" silence
+
+p "sup"
+    $ slow 5
+    $ every 3 (jux rev)
+    $ iter 3
+    $ n "2/2 ~ 3? ~ [2 3 ~] 2*3? ~"
+    # s "ses02"
+
+p "sup" silence
+
+p "wave"
+    $ slow 8
+    $ loopAt 2
+    $ sometimesBy 0.4 (# speed "<0.3 0.4>")
+    $ randslice 120
+    $ gap 100
+    $ s "ses02:1"
+    -- # speed "<0.3 0.2>"
+    # pan sine
+
+p "wave" silence
+
+p "next"
+    $ slow 6
+    -- $ loopAt 2
+    $ sometimesBy 0.8 ((+ speed (1 + sine)) . ply 4)
+    $ slice 100 "25 26 45 65"
+    $ s "ses02"
+
+p "next" silence
+
+d1 $ s "inr"
+
+d1 $ s s3
+
+d1 $ s s4
+
+s1 =
+
+s2 = ses02:1
+
+s3 = ses02:2
+
+s4 = ses02:3

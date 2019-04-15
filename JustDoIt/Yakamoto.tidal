@@ -1,0 +1,37 @@
+module Yakomoto where
+
+setcps 0.8
+
+d1 $ s "superpiano"
+    # n "[-2, -5, 4 2*2?, 7*2 <16 17 19>]*7? ~ ~"
+    # velocity (range 0.6 0.9 perlin)
+    -- # velocity "[1.20 0.9 0.8 1]"
+    # sustainpedal perlin
+    # gain (range 0.4 1 sine)
+
+d1 silence
+
+d2 $ every 2 (slow 2) $ n "c4 d4? <2 -9 4>? [e5 ~? g6] ~"
+    # s "midi"
+    # midichan 0
+    # sustainpedal (range 0.1 0.7 perlin)
+    # gain (range 0.5 0.7 sine)
+
+d2 silence
+
+d3 $ gain "[1 2 3*2]/4"
+    # control (range 64 127 $ slow 3 sine)
+    # ctlNum 64
+    # s "midi"
+    # sustain (range 0.4 0.8 perlin)
+    -- # midichan 0
+    -- # sustainpedal (range 0.1 1.7 perlin)
+    # gain "1 0.9"
+    -- # midicmd "control"
+
+d3 silence
+
+d4 $ jux rev $ brak $ s "bd*2? bd ~ drum ~ drum "
+    # gain (range 1 1.4 perlin)
+
+hush

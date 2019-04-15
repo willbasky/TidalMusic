@@ -1,4 +1,6 @@
-# Bjorklund
+# Pattern Reference
+
+## Bjorklund
 
 If you give two numbers in parenthesis after an element in a pattern,
 then Tidal will distribute the first number of sounds equally across the
@@ -61,35 +63,29 @@ Rhythms](http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf) by
 Toussaint. Some examples from this paper are included below, including
 rotation in some cases.
 
--   (2,5) : A thirteenth century Persian rhythm called Khafif-e-ramal.
--   (3,4) : The archetypal pattern of the Cumbia from Colombia, as well
-    as a Calypso rhythm from Trinidad.
--   (3,5,2) : Another thirteenth century Persian rhythm by the name of
-    Khafif-e-ramal, as well as a Rumanian folk-dance rhythm.
--   (3,7) : A Ruchenitza rhythm used in a Bulgarian folk-dance.
--   (3,8) : The Cuban tresillo pattern.
--   (4,7) : Another Ruchenitza Bulgarian folk-dance rhythm.
--   (4,9) : The Aksak rhythm of Turkey.
--   (4,11) : The metric pattern used by Frank Zappa in his piece titled
-    Outside Now.
--   (5,6) : Yields the York-Samai pattern, a popular Arab rhythm.
--   (5,7) : The Nawakhat pattern, another popular Arab rhythm.
--   (5,8) : The Cuban cinquillo pattern.
--   (5,9) : A popular Arab rhythm called Agsag-Samai.
--   (5,11) : The metric pattern used by Moussorgsky in Pictures at an
-    Exhibition.
--   (5,12) : The Venda clapping pattern of a South African children’s
-    song.
--   (5,16) : The Bossa-Nova rhythm necklace of Brazil.
--   (7,8) : A typical rhythm played on the Bendir (frame drum).
--   (7,12) : A common West African bell pattern.
--   (7,16,14) : A Samba rhythm necklace from Brazil.
--   (9,16) : A rhythm necklace used in the Central African Republic.
--   (11,24,14) : A rhythm necklace of the Aka Pygmies of Central Africa.
--   (13,24,5) : Another rhythm necklace of the Aka Pygmies of the upper
-    Sangha.
+- (2,5) : A thirteenth century Persian rhythm called Khafif-e-ramal.
+- (3,4) : The archetypal pattern of the Cumbia from Colombia, as well as a Calypso rhythm from Trinidad.
+- (3,5,2) : Another thirteenth century Persian rhythm by the name of Khafif-e-ramal, as well as a Rumanian folk-dance rhythm.
+- (3,7) : A Ruchenitza rhythm used in a Bulgarian folk-dance.
+- (3,8) : The Cuban tresillo pattern.
+- (4,7) : Another Ruchenitza Bulgarian folk-dance rhythm.
+- (4,9) : The Aksak rhythm of Turkey.
+- (4,11) : The metric pattern used by Frank Zappa in his piece titled Outside Now.
+- (5,6) : Yields the York-Samai pattern, a popular Arab rhythm.
+- (5,7) : The Nawakhat pattern, another popular Arab rhythm.
+- (5,8) : The Cuban cinquillo pattern.
+- (5,9) : A popular Arab rhythm called Agsag-Samai.
+- (5,11) : The metric pattern used by Moussorgsky in Pictures at an Exhibition.
+- (5,12) : The Venda clapping pattern of a South African children’s song.
+- (5,16) : The Bossa-Nova rhythm necklace of Brazil.
+- (7,8) : A typical rhythm played on the Bendir (frame drum).
+- (7,12) : A common West African bell pattern.
+- (7,16,14) : A Samba rhythm necklace from Brazil.
+- (9,16) : A rhythm necklace used in the Central African Republic.
+- (11,24,14) : A rhythm necklace of the Aka Pygmies of Central Africa.
+- (13,24,5) : Another rhythm necklace of the Aka Pygmies of the upper Sangha.
 
-# Combining patterns
+## Combining patterns
 
 Ok, remember when we started adding effects:
 
@@ -97,8 +93,8 @@ Ok, remember when we started adding effects:
 d1 $ sound "bd sn drum arpy" # pan "0 1 0.25 0.75"
 ```
 
-What we're actually doing in the code above is *combining two patterns
-together*: the `sound` pattern, and the `pan` pattern. The special pipe
+What we're actually doing in the code above is _combining two patterns
+together_: the `sound` pattern, and the `pan` pattern. The special pipe
 operators (`|=|, |+|, |-|, |*|, |/|`), allow us to combine two patterns.
 Remember that `#` is shorthand for `|=|`.
 
@@ -119,14 +115,14 @@ d1 $ pan "0 1 0.25" # sound "bd sn drum arpy"
 
 In the code above, the `pan` pattern determines the rhythm because it is
 the left-most pattern. The `sound` pattern now only determines what
-samples are played at what time. The sound pattern gets *mapped* onto
+samples are played at what time. The sound pattern gets _mapped_ onto
 the pan pattern.
 
 You might be wondering how TidalCycles decides which sound values get
 matched with which pan values in the above. (If not, there is no need to
 read the rest of this paragraph just now!) The rule is, for each value
 in the pattern on the left, values from the right are matched where the
-start (or *onset*) of the left value, fall within the timespan of the
+start (or _onset_) of the left value, fall within the timespan of the
 value on the right. For example, the second `pan` value of `1` starts
 one third into its pattern, and the second `sound` value of `sn` starts
 one quarter into its pattern, and ends at the halfway point. Because the
@@ -150,19 +146,17 @@ Above, the `sound` pattern is merely specifying three samples to play on
 every note. Both the rhythm and pitch of these notes is defined by the
 `up` pattern.
 
-# Composing patterns
-
+## Composing patterns
 
 There are a few ways that you can compose new patterns from multiple
 other patterns. You can concatenate or "append" patterns in serial, or
 you can "stack" them and play them together in parallel.
 
-## Concatenating patterns in serial
+### Concatenating patterns in serial
 
 You can use the `fastcat` function to add patterns one after another:
 
 ```haskell
-
 d1 $ fastcat [sound "bd sn:2" # vowel "[a o]/2",
               sound "casio casio:1 casio:2*2"
              ]
@@ -194,7 +188,7 @@ of sequences), giving a larger form to multiple patterns.
 
 There's also `randcat`, which will play a random pattern from the list.
 
-## Playing patterns together in parallel
+### Playing patterns together in parallel
 
 The `stack` function takes a list of patterns and combines them into a
 new pattern by playing all of the patterns in the list simultaneously.
@@ -218,12 +212,11 @@ d1 $ every 4 (slow 2) $ whenmod 5 3 (# speed "0.75 1.5") $ stack [
 ] # speed "[[1 0.8], [1.5 2]*2]/3"
 ```
 
-# Continuous
+## Continuous
 
-
-So far we've only been working with *discrete* patterns, by which we
+So far we've only been working with _discrete_ patterns, by which we
 mean patterns which containing events which begin and end. Tidal also
-supports *continuous* patterns which instead vary continually over time.
+supports _continuous_ patterns which instead vary continually over time.
 You can create continuous patterns using functions which give sine, saw,
 triangle, and square waves:
 
@@ -266,7 +259,7 @@ d1 $ sound "bd*16" # pan (slowcat [sine, saw, square, tri])
 d1 $ sound "sn:2*16" # speed ((scale 0.5 3 sine) * (slow 4 saw))
 ```
 
-## Scaling Oscillation
+### Scaling Oscillation
 
 You can tell the oscillation functions to scale themselves and oscillate
 between two values:
@@ -297,7 +290,11 @@ d1 $ sound "hh*32" # cutoff (scale 300 1000 $ slow 4 $ sine) # resonance "0.4"
 > continuous values, you still need to combine them with discrete sound
 > patterns.
 
-# Cut
+## Cut
+
+```haskell
+cut :: Pattern Int -> ParamPattern
+```
 
 So far, all of our examples have used short samples. However, maybe
 you've experimented with some long samples. Maybe you've noticed that
@@ -344,7 +341,7 @@ d1 $ stack [
    sound (samples "bass2*6" (run 6)) # speed "0.5" # cut "2" ]
 ```
 
-# Effects
+## Effects
 
 TidalCycles has a number of effects that you can apply to sounds. Some
 of them do simple things like change volume, and others do more complex
@@ -370,7 +367,7 @@ d1 $ sound "bd*4" # crush "4" # speed "2"
 The code above both bitcrushes and speeds up sample playback (which
 increases the 'pitch').
 
-## Effects are patterns too
+### Effects are patterns too
 
 You may notice that the values of effects are specified in double
 quotes. This means that you can pattern the effect values too:
@@ -396,7 +393,7 @@ d1 $ sound "bd*4" # gain (every 3 (rev) $ "1 0.8 0.5 0.7")
 > Like with the `sound` example earlier, you must use parenthesis after
 > `gain` in order to specify a function on the `gain` pattern.
 
-## Effect pattern order
+### Effect pattern order
 
 You can specify the effect before the sound pattern:
 
@@ -409,7 +406,7 @@ given by the pattern on the left of the `#`. In this case, only one `bd`
 sound is given, but you hear four, because the structure comes from the
 `gain` pattern on the left.
 
-## Modifying effect values
+### Modifying effect values
 
 The `#` operator is just a shortcut to a longer form of operator called
 `|=|`. The `|=|` operator means something special about combining
@@ -424,8 +421,7 @@ d1 $ (|=| speed "2") $ sound "arpy*4" |=| speed "1"
 ```
 
 In the code above, the left-most effect overrides the original effect
-that was specified on the right. In this case, `speed` will always equal
-2.
+that was specified on the right. In this case, `speed` will always equal 2.
 
 You can do this conditionally:
 
@@ -442,7 +438,7 @@ There are other types of operators that allow you to perform arithmetic:
 |/|
 ```
 
-For example, using `|+|` will perform an *addition* operation and *add*
+For example, using `|+|` will perform an _addition_ operation and _add_
 to an original value:
 
 ```haskell
@@ -464,18 +460,18 @@ course:
 d1 $ every 3 (|-| up "3") $ every 2 (|+| up "5") $ sound "arpy*4" |=| up "0 2 4 5"
 ```
 
-## Some Common Effects
+### Some Common Effects
 
 Here is a quick list of some effects you can use in Tidal (the full list
 is available in the Reference section):
 
--   gain (changes volume, values from 0 to 1)
--   pan (pans sound right and left, values from 0 to 1)
--   shape (a type of amplifier, values from 0 to 1)
--   vowel (a vowel formant filter, values include a, e, i, o, and u)
--   speed (changes playback speed of a sample, see below)
+- gain (changes volume, values from 0 to 1)
+- pan (pans sound right and left, values from 0 to 1)
+- shape (a type of amplifier, values from 0 to 1)
+- vowel (a vowel formant filter, values include a, e, i, o, and u)
+- speed (changes playback speed of a sample, see below)
 
-# Fills
+## Fills
 
 You can think of a "fill" as a change to a regular pattern that happens
 regularly. e.g. every 4 cycles do "xya", or every 8 cycles do "abc".
@@ -487,9 +483,9 @@ fills:
 d1 $ every 8 (rev) $ every 4 (density 2) $ sound "bd hh sn cp"
 ```
 
-~~~haskell
+```haskell
 d1 $ whenmod 16 14 (# speed "2") $ sound "bd arpy*2 cp bass2"
-~~~
+```
 
 However, what if you wanted to conditionally replace the pattern with a
 new one? You can use the `const` function to completely replace a
@@ -511,13 +507,13 @@ We can conditionally apply `const` using `every` or `whenmod`:
 d1 $ whenmod 8 6 (const $ sound "arpy(3,8) bd*4") $ sound "bd sn bass2 sn"
 ```
 
-~~~haskell
+```haskell
 d1 $ every 12 (const $ sound "bd*4 sn*2") $ sound "bd sn bass2 sn"
-~~~
+```
 
-# Pattern groups
+## Pattern groups
 
-You can use Tidal's *square brackets* syntax to create a pattern
+You can use Tidal's _square brackets_ syntax to create a pattern
 grouping:
 
 ```haskell
@@ -562,7 +558,7 @@ The former approach is often easier to type, but is a relatively new
 addition to TidalCycles, and so many examples will use the square
 brackets.
 
-## Layering (Polyrhythms) Instead of Grouping
+### Layering (Polyrhythms) Instead of Grouping
 
 You can also layer up several loops, by using commas to separate the
 different parts:
@@ -589,7 +585,7 @@ And of course you can use groupings inside of the layers:
 d1 $ sound "[bd bd bd, [sd sd] cp, arpy [arpy [arpy arpy] arpy arpy], odx]"
 ```
 
-# Playing one step per cycle
+## Playing one step per cycle
 
 To specify a group where only one step is played per cycle, use angle
 brackets. For example:
@@ -601,10 +597,10 @@ d1 $ sound "bd <arpy:1 arpy:2 arpy:3>"
 The above will result in the sequence `bd arpy:1 bd arpy:2 bd arpy:3`,
 over three cycles.
 
-# Polymeter
+## Polymeter
 
-We talked about *polyrhythms* earlier, but Tidal can also produce
-*polymeter* sequences. A polymeter pattern is one where two patterns
+We talked about _polyrhythms_ earlier, but Tidal can also produce
+_polymeter_ sequences. A polymeter pattern is one where two patterns
 have different sequence lengths, but share the same pulse or tempo.
 
 You use curly brace syntax to create a polymeter rhythm:
@@ -622,7 +618,7 @@ d1 $ sound "{arpy bass2 drum notes can, bd hh sn cp}"
 ```
 
 Sometimes you might want to create an odd polymeter rhythm without
-having to explicitly create a base rhythm. You *could* do this with
+having to explicitly create a base rhythm. You _could_ do this with
 rests:
 
 ```haskell
@@ -645,14 +641,15 @@ d1 $ sound "{~ ~ ~ ~, arpy bass2 drum notes can}"
 If "polymeter" sounds a bit confusing, there's a good explanation here:
 <http://music.stackexchange.com/questions/10488/polymeter-vs-polyrhythm>
 
-# Randomness
+## Randomness
 
 Tidal can produce random patterns of integers and decimals. It can also
 introduce randomness into patterns by removing random events.
 
-## Random Decimal Patterns
+### Random Decimal Patterns
 
 You can use the `rand` function to create a random value between 0 and
+
 1. This is useful for effects:
 
 ```haskell
@@ -667,7 +664,7 @@ and `0.75`:
 d1 $ sound "arpy*4" # pan (scale 0.25 0.75 $ rand)
 ```
 
-## Random Integer Patterns
+### Random Integer Patterns
 
 Use the `irand` function to create a random integer up to a given
 maximum. The most common usage of `irand` is to produce a random pattern
@@ -679,7 +676,7 @@ d1 $ s "arpy*8" # n (irand 30)
 
 The code above randomly chooses from 30 samples in the "arpy" folder.
 
-> Hairy detail: `rand` and `irand` are actually *continuous* patterns,
+> Hairy detail: `rand` and `irand` are actually _continuous_ patterns,
 > which in practical terms means they have infinite detail - you can
 > treat them as pure information! As with all patterns they are also
 > deterministic, stateless functions of time, so that if you retriggered
@@ -689,7 +686,7 @@ The code above randomly chooses from 30 samples in the "arpy" folder.
 > isn't what you want, you can simply shift or slow down time a little
 > for one of them, e.g. `slow 0.3 rand`.
 
-## Removing or "Degrading" Pattern events
+### Removing or "Degrading" Pattern events
 
 Tidal has a few ways to randomly remove events from patterns. You can
 use the shorthand `?` symbol if you want to give an event a 50/50 chance
@@ -762,7 +759,7 @@ e.g.:
 d1 $ rarely (# crush 4) $ sound "bd*8"
 ```
 
-# Repetition
+## Repetition
 
 There are two short-hand symbols you can use inside patterns to speed
 things up or slow things down: `*` and `/`. You could think of these
@@ -795,11 +792,11 @@ Using different numbers works as you'd expect:
 d1 $ sound "bd*3" -- plays the bd sample three times each cycle
 ```
 
-~~~haskell
+```haskell
 d1 $ sound "bd/3" -- plays the bd samples only once each third cycle
-~~~
+```
 
-## Using \* and / on Groups
+### Using \* and / on Groups
 
 You can apply the `*` and `/` symbols on groups of patterns:
 
@@ -807,15 +804,17 @@ You can apply the `*` and `/` symbols on groups of patterns:
 d1 $ sound "[bd sn]*2 cp"
 ```
 
-~~~haskell
+```haskell
 d1 $ sound "[bd sn] cp/2"
-~~~
-~~~haskell
+```
+
+```haskell
 d1 $ sound "[[bd sn] cp]*2" -- speeds up the entire pattern by 2
-~~~
-~~~haskell
+```
+
+```haskell
 d1 $ sound "[[bd sn] cp]/2" -- slows down the entire pattern by 2
-~~~
+```
 
 You can also use the symbols on nested groups to create more complex
 rhythms:
@@ -824,12 +823,11 @@ rhythms:
 d1 $ sound "[bd sn sn*3]/2 [bd sn*3 bd*4]/3"
 ```
 
-~~~haskell
-d1 $ sound "[bd [sn sn]*2]/2 [bd [sn
-bd]/2]*2"
-~~~
+```haskell
+d1 $ sound "[bd [sn sn]*2]/2 [bd [sn bd]/2]*2"
+```
 
-# Rests
+## Rests
 
 So far we have produced patterns that keep producing more and more
 sound. What if you want a rest, or gap of silence, in your pattern? You
@@ -842,7 +840,7 @@ d1 $ sound "bd bd ~ bd"
 Think of the `~` as an 'empty' step in a sequence, that just produces
 silence.
 
-# Run
+## Run
 
 There is a special utility function called `run` which will return a
 pattern of integers up to a specified maximum. You can use `run` with
@@ -852,9 +850,9 @@ effects to aid in automatically generating a linear pattern:
 d1 $ sound "arpy*8" # up (run 8)
 ```
 
-~~~haskell
+```haskell
 d1 $ sound "arpy*8" # speed (run 8)
-~~~
+```
 
 In the above we're specifying the number of sounds twice - in the
 `sound` pattern as well as the `up` or `speed` pattern. There's actually
@@ -878,8 +876,7 @@ d1 $ sound "arpy*8" # up (every 2 (rev) $ run 8)
 For a more practical example of using `run`, read below about selecting
 samples from folders.
 
-# Sample selection
-
+## Sample selection
 
 The `sound` parameter we've been using up to now can actually be broken
 into two seperate parameters, making it easy to select samples with a
@@ -963,7 +960,7 @@ You might sometimes see the samples function wrapped in parenthesis:
 d1 $ sound (samples "drum arpy cp hh" (run 10))
 ```
 
-# Samples
+## Samples
 
 If you're using SuperDirt, all the default samples can be found in the
 `Dirt-Samples` folder - you can open it by running `Quarks.gui` in
@@ -982,9 +979,9 @@ seven in the folder, it'll wrap around and play the second one.
 If you want to add your own samples, just create a new folder in the
 samples folder, and put `wav` files in it.
 
-# Sequences
+## Sequences
 
-## Play a Single Sample
+### Play a Single Sample
 
 Tidal starts with nine connections to the SuperDirt synthesiser, named
 from `d1` to `d9` (if you're using the 'classic' dirt, then instead use
@@ -1033,9 +1030,9 @@ d1 $ sound "bd" # n "3"
 
 The usefulness of doing this will become apparent later.
 
-## Sequences From Multiple Samples
+### Sequences From Multiple Samples
 
-Putting things in quotes allows you to define a *sequence*. For example,
+Putting things in quotes allows you to define a _sequence_. For example,
 the following gives you a pattern of kick drum then snare:
 
 ```haskell
@@ -1045,7 +1042,7 @@ d1 $ sound "bd sd:3"
 When you run the code above, you are replacing the previous pattern with
 another one on-the-fly. Congratulations, you're live coding.
 
-## Playing More Than One Sequence
+### Playing More Than One Sequence
 
 The easiest way to play multiple sequences at the same time is to use
 two or more connections to the synthesizer:
@@ -1064,7 +1061,7 @@ d3 $ sound "arpy"
 > each pattern, or Tidal will evaluate them together and get confused
 > (if you want to evaluate just one line, you can press shift-enter).
 
-## What is a Cycle?
+### What is a Cycle
 
 A cycle is the main "loop" of time in Tidal. The cycle repeats forever
 in the background, even when you've stopped samples from playing. The
@@ -1096,9 +1093,9 @@ them, in order to fit them all in. No matter how many samples you put in
 a pattern in this way, they will always be distributed evenly within a
 single cycle.
 
-# Shifting time
+## Shifting time
 
-You can use the `~>` and `<-` functions to shift patterns forwards or
+You can use the `~>` and `<~` functions to shift patterns forwards or
 backwards in time, respectively. With each of these functions, you can
 specify an amount, in cycle units.
 
@@ -1146,7 +1143,7 @@ You can also specify a pattern for the shift amount:
 d1 $ "[0 0.25]/4" <~ (sound "bd*2 cp*2 hh sn")
 ```
 
-# Shorthand
+## Shorthand
 
 From version 0.9 of Tidal, there are some nice ways of saving on
 keypresses when working with numerical patterns.
@@ -1201,9 +1198,9 @@ d1 $ n "[0..7] [3..1]" # sound "supergong"
 d1 $ n "[0 1 2 3 4 5 6 7] [3 2 1]" # sound "supergong"
 ```
 
-# Silence
+## Silence
 
-At this point you probably want to know how to *stop* the patterns you
+At this point you probably want to know how to _stop_ the patterns you
 started. An empty pattern is defined as `silence`, so if you want to
 'switch off' a pattern, you can just set it to that:
 
@@ -1225,7 +1222,7 @@ You can also isolate a single connection and silence all others with the
 solo $ d1 $ sound "bd sn"
 ```
 
-# Speed
+## Speed
 
 You can change the playback speed of a sample in TidalCycles by using
 the `speed` effect. You can use `speed` to change pitches, to create a
@@ -1235,9 +1232,9 @@ the latter).
 
 You can set a sample's speed by using the `speed` effect with a number.
 
--   `speed "1"` plays a sample at its original speed
--   `speed "0.5"` plays a sample at half of its original speed
--   `speed "2"` plays a sample at double its original speed
+- `speed "1"` plays a sample at its original speed
+- `speed "0.5"` plays a sample at half of its original speed
+- `speed "2"` plays a sample at double its original speed
 
 ```haskell
 d1 $ sound "arpy" # speed "1"
@@ -1263,7 +1260,7 @@ You can also reverse a sample by specifying negative values:
 d1 $ speed "-1 -0.5 -2 -1.5" # sound "arpy"
 ```
 
-## Play a sample at multiple speeds simultaneously
+### Play a sample at multiple speeds simultaneously
 
 Use the pattern grouping syntax with a comma to cause `speed` to play a
 sample back at multiple speeds at the same time:
@@ -1276,7 +1273,7 @@ d1 $ sound "arpy" # speed "[1, 1.5]"
 d1 $ speed "[1 0.5, 1.5 2 3 4]" # sound "arpy"
 ```
 
-## 12-tone scale speeds
+### 12-tone scale speeds
 
 You can also use the `up` function to change playback speed. `up` is a
 shortcut effect that matches speeds to half steps on a 12-tone scale.
@@ -1290,7 +1287,7 @@ d1 $ up "0 1 2 3 4 5 6 7 8 9 10 11" # sound "arpy"
 > of integers: `d1 $ up (run 12) # sound "arpy"`. The `run` function
 > will be discussed later.
 
-# Synths
+## Synths
 
 For this section to work, you need to have installed the SuperCollider
 sc3-plugins. You can either install the latest version from
@@ -1350,17 +1347,17 @@ Many example synths can be found in the `default-synths-extra.scd` file
 in the `SuperDirt/library` folder or in `default-synths.scd` and
 `tutorial-synths.scd` in the `SuperDirt/synths` folder. These include:
 
--   a series of tutorials: `tutorial1`, `tutorial2`, `tutorial3`,
-    `tutorial4`, `tutorial5`
--   examples of modulating with the cursor or sound input: `pmsin`,
-    `in`, `inr`
--   physical modeling synths: `supermandolin`, `supergong`,
-    `superpiano`, `superhex`
--   a basic synth drumkit: `superkick`, `superhat`, `supersnare`,
-    `superclap`, `super808`
--   four analogue-style synths: `supersquare`, `supersaw`, `superpwm`,
-    `supercomparator`
--   two digital-style synths: `superchip`, `supernoise`
+- a series of tutorials: `tutorial1`, `tutorial2`, `tutorial3`,
+  `tutorial4`, `tutorial5`
+- examples of modulating with the cursor or sound input: `pmsin`,
+  `in`, `inr`
+- physical modeling synths: `supermandolin`, `supergong`,
+  `superpiano`, `superhex`
+- a basic synth drumkit: `superkick`, `superhat`, `supersnare`,
+  `superclap`, `super808`
+- four analogue-style synths: `supersquare`, `supersaw`, `superpwm`,
+  `supercomparator`
+- two digital-style synths: `superchip`, `supernoise`
 
 To find the SuperDirt folder, simply run `Quarks.folder` in
 supercollider. The full folder location should appear in the postwindow
@@ -1450,14 +1447,14 @@ d1 $ n "[c2 e3 g4 c5 c4 c3]*4/3"
     # speed "-4"
 ```
 
-~~~haskell
+```haskell
 d2 $ every 4 (echo (negate 3/32)) $ n "c5*4"
-    # s "supernoise"        
+    # s "supernoise"
     # accelerate "-2"
     # speed "1"
     # sustain "0.1 ! ! 1"
     # voice "0.0"
-~~~
+```
 
 ```haskell
 d1 $ s "supernoise/8"
@@ -1479,7 +1476,7 @@ This is all quite new and under ongoing development, but you can read
 about modifying and adding your own synths to SuperDirt at [its github
 repository](https://github.com/musikinformatik/SuperDirt).
 
-# Tempo
+## Tempo
 
 If you've made it this far without changing the tempo in all these
 examples, then you're probably ready to change it up.
@@ -1512,7 +1509,7 @@ play at 140 bpm, with four beats per cycle, then you could do:
 cps (140/60/4)
 ```
 
-# Transformation
+## Transformation
 
 Tidal comes into its own when you start building things up with
 functions which transform the patterns in various ways.
@@ -1582,7 +1579,7 @@ The `fast` function is also known as `density`, which is actually the
 older name, so a lot of examples will use it instead of the (slightly
 quicker to type) `fast`. They do exactly the same thing.
 
-## Where are all the functions?
+### Where are all the functions
 
 There are many types of functions that help you change patterns. Some of
 them re-order sequences, some alter time, some provide conditional
@@ -1592,7 +1589,7 @@ We'll introduce many of the core functions in this introduction, and a
 more complete list of functions available in Tidal can be found on the
 [Reference page](https://tidalcycles.org/functions.html).
 
-# Transitions
+## Transitions
 
 Changing the pattern on a channel takes effect (almost) immediately.
 This may not be what you want, especially when performing live!
@@ -1626,7 +1623,7 @@ Apart from anticipate and xfadeIn there are a lot more transition
 functions e.g. some that will force you to keep changing your patterns
 to avoid repetitive performances…
 
-# Variation
+## Variation
 
 You can create a lot of cyclic variations in patterns by layering
 conditional logic:

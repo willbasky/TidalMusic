@@ -1,4 +1,6 @@
-# Combining parameters
+# Function Reference
+
+## Combining parameters
 
 Most often, parameters are composed together into synth messages using
 the `#` operator. Using `#`, if you specify the same parameter more
@@ -30,11 +32,11 @@ d1 $ every 2 (|+| speed sine1) $ sound "bd*2" # speed "1 2"
 The `|+|` `|-|` `|/|` and `|*|` operators only exhibit this behaviour
 with numerical pattern parameters.
 
-# Composition
+## Composition
 
 Some functions work with multiple sets of patterns, interlace them or play them successively.
 
-## append
+### append
 
 ~~~~haskell
 append :: Pattern a -> Pattern a -> Pattern a
@@ -56,7 +58,7 @@ the cycles alternate between the two patterns.
 d1 $ append' (sound "bd*2 sn") (sound "arpy jvbass*2")
 ~~~~
 
-## fastcat
+### fastcat
 
 ~~~~haskell
 fastcat :: [Pattern a] -> Pattern a
@@ -78,7 +80,7 @@ d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
 d1 $ fastcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
 ~~~~
 
-## interlace
+### interlace
 
 ~~~~ haskell
 interlace :: ParamPattern -> ParamPattern -> ParamPattern
@@ -96,7 +98,7 @@ Example:
 d1 $ interlace (sound  "bd sn kurt") (every 3 rev $ sound  "bd sn:2")
 ~~~~
 
-## randcat
+### randcat
 
 ~~~~haskell
 randcat :: [Pattern a] -> Pattern a
@@ -109,7 +111,7 @@ patterns in order, picks them at random.
 d1 $ randcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
 ~~~~
 
-## seqP
+### seqP
 
 ```haskell
 seqP :: [(Time, Time, Pattern a)] -> Pattern a
@@ -150,7 +152,7 @@ d1 $ (pure now) ~> seqPLoop [
 ]
 ~~~~
 
-## cat
+### cat
 
 ~~~~haskell
 cat :: [Pattern a] -> Pattern a
@@ -171,7 +173,7 @@ d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
 d1 $ cat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
 ~~~~
 
-## spin
+### spin
 
 ~~~~haskell
 spin :: Int n -> Pattern a -> Pattern a
@@ -183,7 +185,7 @@ spin :: Int n -> Pattern a -> Pattern a
 d1 $ slow 3 $ spin 4 $ sound "drum*3 tabla:4 [arpy:2 ~ arpy] [can:2 can:3]"
 ~~~~
 
-## stack
+### stack
 
 ~~~~ haskell
 stack :: [Pattern a] -> Pattern a
@@ -211,7 +213,7 @@ d1 $ whenmod 5 3 (striate 3) $ stack [
 ] # speed "[[1 0.8], [1.5 2]*2]/3"
 ~~~~
 
-## superimpose
+### superimpose
 
 ~~~~haskell
 superimpose :: (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -228,7 +230,7 @@ d1 $ superimpose (fast 2) $ sound "bd sn [cp ht] hh"
 d1 $ superimpose ((# speed "2") . (0.125 <~)) $ sound "bd sn cp hh"
 ~~~~
 
-## weave
+### weave
 
 ~~~~haskell
 weave :: Time -> ParamPattern -> [ParamPattern] -> ParamPattern
@@ -265,7 +267,7 @@ d1 $ weave 16 (sound "arpy*8" # n (run 8))
 d1 $ weave' 3 (sound "bd [sn drum:2*2] bd*2 [sn drum:1]") [fast 2, (# speed "0.5"), chop 16]
 ~~~~
 
-## wedge
+### wedge
 
 ~~~~haskell
 wedge :: Time -> Pattern a -> Pattern a -> Pattern a
@@ -280,11 +282,11 @@ remainder of the pattern cycle.
 d1 $ wedge (1/4) (sound "bd*2 arpy*3 cp sn*2") (sound "odx [feel future]*2 hh hh")
 ~~~~
 
-# Conditional
+## Conditional
 
 Conditional transformers are functions that apply other transformations under certain cirumstances. These can be based upon the number of cycles, probability or time-range within a pattern.
 
-## every
+### every
 
 ~~~~ haskell
 every :: Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -309,7 +311,7 @@ cycles 2,6,10,...
 
 Also, see `whenmod`.
 
-## foldEvery
+### foldEvery
 
 ~~~~ haskell
 foldEvery :: [Int] -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -330,7 +332,7 @@ this is equal to:
 d1 $ every 3 (fast 2) $ every 4 (fast 2) $ every 5 (fast 2) $ sound "bd sn kurt"
 ~~~~
 
-## ifp
+### ifp
 
 ~~~haskell
 ifp :: (Int -> Bool) -> (Pattern a -> Pattern a) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -349,7 +351,7 @@ This will apply `striate 4` for every _even_ cycle and aply `# coarse "24 48"` f
 
 Detail: As you can see the test function is arbitrary and does not rely on anything tidal specific. In fact it uses only plain haskell functionality, that is: it calculates the modulo of 2 of the current cycle which is either 0 (for even cycles) or 1. It then compares this value against 0 and returns the result, which is either `True` or `False`. This is what the `ifp` signature's first part signifies `(Int -> Bool)`, a function that takes a whole number and returns either `True` or `False`.
 
-## mask
+### mask
 
 ~~~haskell
 mask :: Pattern a -> Pattern b -> Pattern b
@@ -383,7 +385,7 @@ d1 $ s (mask ("1 ~ 1 ~ 1 1 ~ 1" :: Pattern Bool)
 
 Detail: It is currently needed to explicitly _tell_ Tidal that the mask itself is a `Pattern Bool` as it cannot infer this by itself, otherwise it will complain as it does not know how to interpret your input.
 
-## someCyclesBy
+### someCyclesBy
 
 ~~~~ haskell
 someCyclesBy :: Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -405,7 +407,7 @@ There is an alias as well:
 someCycles = someCyclesBy 0.5
 ~~~~
 
-## sometimesBy
+### sometimesBy
 
 ~~~~ haskell
 sometimesBy :: Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -430,7 +432,7 @@ never = sometimesBy 0
 always = sometimesBy 1
 ~~~~
 
-## swingBy
+### swingBy
 
 ~~~~haskell
 swingBy::Time -> Time -> Pattern a -> Pattern a
@@ -449,7 +451,7 @@ will delay every other `"hh"` 1/3 of the way to the next `"hh"`.
 
 `swing` is an alias for `swingBy (1/3)`
 
-## when
+### when
 
 ~~~haskell
 when :: (Int -> Bool) -> (Pattern a -> Pattern a) ->  Pattern a -> Pattern a
@@ -465,7 +467,7 @@ d1 $ when ((elem '4').show)
 
 The above will only apply `striate 4` to the pattern if the current cycle number contains the number 4. So the fourth cycle will be striated and the fourteenth and so on. Expect lots of striates after cycle number 399.
 
-## whenmod
+### whenmod
 
 ~~~~ haskell
 whenmod :: Int -> Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -483,7 +485,7 @@ as dense:
 d1 $ whenmod 8 4 (fast 2) (sound "bd sn kurt")
 ~~~~
 
-## within
+### within
 
 ~~~~haskell
 within :: Arc -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -502,13 +504,14 @@ Or, to apply `(# speed "0.5") to only the last quarter of a pattern:
 d1 $ within (0.75, 1) (# speed "0.5") $ sound "bd*2 sn lt mt hh hh hh hh"
 ~~~~
 
-# Operators
+## Operators
 
 ### specific to Tidal
 
 The general rule for things that combine patterns is that they use the structure of the pattern on the *left*.
 
 #### `|+|`, `|*|`, `|-|`, `|/|`
+
 Operate on *ParamPatterns*, and perform the arithmetic operation if the two parameters are the same (such as `speed` and `speed`), or simply merge the parameters just as `#` would if the parameters are different.
 
 ~~~~ haskell
@@ -522,9 +525,11 @@ speed "3 4 5 6"
 ~~~~
 
 #### `#`, `|=|`
+
 They mean the same thing: they merge *ParamPatterns* together
 
 #### `###`, `***`, `+++`, `///`
+
 These take a **list** of *ParamPatterns* as their second argument, and merge them all together with the relevant arithmetic operator.  Can simplify long expressions.
 
 ~~~~ haskell
@@ -532,6 +537,7 @@ d1 $ s "bd sn" # speed "1.2" *** [speed "2", crush "4"]
 ~~~~
 
 #### `<~`, `~>`
+
 These time-shift the pattern on the RHS by the number of cycles on the LHS.
 
 ~~~~ haskell
@@ -545,6 +551,7 @@ is the same as
 ~~~~
 
 #### `<~>`
+
 Pattern replacement: takes the elements of the second pattern and makes a new pattern using the structure of the first
 
 ~~~~ haskell
@@ -566,6 +573,7 @@ one cycle and
 the next cycle
 
 #### `<<~`, `~>>`
+
 Pattern rotation, these move the elements of the pattern without changing the structure of the pattern
 
 ~~~~ haskell
@@ -579,6 +587,7 @@ is the same as
 ~~~~
 
 #### `!!!`
+
 List indexing with built-in modulo so you can't go past the end of the list
 
 ~~~~ haskell
@@ -590,9 +599,11 @@ returns `2`
 ### useful Haskell operators
 
 #### `<$>`
+
 A synonym for `fmap`, useful for mapping numerical functions so they work on patterns.
 
 #### `<*>`
+
 A synonym for `ap`, useful for promoting functions to work with patterns.
 
 ~~~~ haskell
@@ -608,15 +619,18 @@ is the same as `"3 4 5 6"`
 is also the same
 
 #### `!!`
+
 Haskell's way of doing list indexing
 
 #### `$`
+
 An alternative to parentheses, means "evaluate everything on the right first"
 
 #### `.`
+
 Function composition, needs functions with only a single argument unspecified
 
-# Pattern transformers
+## Pattern transformers
 
 Pattern transformers are functions that take a pattern as input and transform
 it into a new pattern.
@@ -624,7 +638,7 @@ it into a new pattern.
 In the following, functions are shown with their Haskell type and a
 short description of how they work.
 
-## Beat rotation
+### Beat rotation
 
 ~~~~ haskell
 (<~) :: Pattern Time -> Pattern a -> Pattern a
@@ -658,7 +672,7 @@ Or to alternate between different shifts:
 d1 $ "<0 0.5 0.125>" <~ sound ("arpy arpy:1 arpy:2 arpy:3")
 ~~~
 
-## brak
+### brak
 
 ```haskell
 brak :: Pattern a -> Pattern a
@@ -672,12 +686,13 @@ cycle, squashing the pattern to fit half a cycle, and offsetting it by a
 quarter of a cycle.
 
 Example:
+
 ~~~~ haskell
 d1 $ brak $ sound "[feel feel:3, hc:3 hc:2
 hc:4 ho:1]"
 ~~~~
 
-## degrade
+### degrade
 
 ```haskell
 degrade :: Pattern a -> Pattern a
@@ -704,7 +719,7 @@ You can also use `?` to randomly remove events from entire sub-patterns:
 d1 $ slow 2 $ sound "[[[feel:5*8,feel*3] feel:3*8]?, feel*4]"
 ```
 
-## degradeBy
+### degradeBy
 
 ```haskell
 degradeBy :: Double -> Pattern a -> Pattern a
@@ -719,7 +734,7 @@ d1 $ slow 2 $ degradeBy 0.9 $ sound "[[[feel:5*8,feel*3] feel:3*8], feel*4]"
    # speed "2"
 ```
 
-## fast
+### fast
 
 ```haskell
 fast :: Pattern Time -> Pattern a -> Pattern a
@@ -738,7 +753,7 @@ You can also use this function by its older alias, `density`.
 
 See also [slow](#slow).
 
-## fit
+### fit
 
 ```haskell
 fit :: Int -> [a] -> Pattern Int -> Pattern a
@@ -792,7 +807,7 @@ which uses `chop` to break a single sample into individual pieces, which
 `fit'` then puts into a list (using the `run 4` pattern) and reassembles
 according to the complicated integer pattern.
 
-## iter
+### iter
 
 ```haskell
 iter :: Pattern Int -> Pattern a -> Pattern a
@@ -818,7 +833,7 @@ sn cp bd hh
 cp bd hh sn
 ```
 
-## jux (and juxBy)
+### jux (and juxBy)
 
 The `jux` function creates strange stereo effects, by applying a
 function to a pattern, but only in the right-hand channel. For example,
@@ -850,7 +865,7 @@ d1 $ juxBy 0.5 (fast 2) $ sound "bd sn:1"
 In the above, the two versions of the pattern would be panned at 0.25
 and 0.75, rather than 0 and 1.
 
-## linger
+### linger
 
 ```haskell
 linger :: Pattern Time -> Pattern a -> Pattern a
@@ -891,7 +906,7 @@ d1 $ trunc "<0.75 0.25 1>" $ sound "bd sn:2 [mt rs] hc"
 d1 $ linger "<0.25 0.5 1>" $ loopAt 2 $ chop 8 $ sound "breaks125"
 ```
 
-## Mapping over patterns
+### Mapping over patterns
 
 Sometimes you want to transform all the events inside a pattern, and not
 the time structure of the pattern itself. For example, if you wanted to
@@ -936,7 +951,7 @@ Example:
 d1 $ palindrome $ sound "arpy:0 arpy:1 arpy:2 arpy:3"
 ```
 
-## rev
+### rev
 
 ```haskell
 rev :: Pattern a -> Pattern a
@@ -954,7 +969,7 @@ Or in a conditional:
 d1 $ slow 2 $ every 3 (rev) $ n "0 1 2 3" # sound "numbers"
 ```
 
-## scramble
+### scramble
 
 ```haskell
 scramble :: Int -> Pattern a -> Pattern a
@@ -972,7 +987,7 @@ will sometimes play `"sn bd hh"` or `"hh sn bd"`, but can also play
 `"bd sn bd"` or `"hh hh hh"`, because it can make any random combination
 of the three parts.
 
-## shuffle
+### shuffle
 
 ```haskell
 shuffle :: Int -> Pattern a -> Pattern a
@@ -991,7 +1006,7 @@ will sometimes play `"sn bd hh"` or `"hh sn bd"` or `"hh bd sn"`. But it
 can **never** play `"hh hh hh"`, because that isn't a permutation of the
 three parts.
 
-## slow
+### slow
 
 ```haskell
 slow :: Pattern Time -> Pattern a -> Pattern a
@@ -1016,10 +1031,10 @@ d1 $ sound (slow 0.5 "bd sn kurt")
 
 Also, see [fast](#fast).
 
-## smash
+### smash
 
 ```haskell
-smash :: Int -> [Time] -> ParamPattern -> ParamPattern
+smash :: Pattern Int -> [Pattern Time] -> ParamPattern -> Pattern ParamMap
 ```
 
 Smash is a combination of `spread` and `striate` - it cuts the samples
@@ -1038,7 +1053,11 @@ Is a bit like this:
 d1 $ slow "<2 3 4>" $ striate 3 $ sound "ho ho:2 ho:3 hc"
 ```
 
-## spread
+### spread
+
+```haskell
+spread :: (a -> t -> Pattern b) -> [a] -> t -> Pattern b
+```
 
 The `spread` function allows you to take a pattern transformation which
 takes a parameter, such as `slow`, and provide several parameters which
@@ -1071,7 +1090,7 @@ the two speeds:
 d1 $ spread slow [2,4/3] $ sound "ho ho:2 ho:3 hc"
 ```
 
-There is a nice trick you can use here - if you pass (\$) as the
+There is a nice trick you can use here - if you pass `($)` as the
 function to spread values over, you can put functions in the list
 instead of values. For example:
 
@@ -1083,11 +1102,11 @@ d1 $ spread ($) [fast 2, rev, slow 2, striate 3, (# speed "0.8")]
 Above, the pattern will have these transforms applied to it, one at a
 time, per cycle:
 
--   cycle 1: `fast 2` - pattern will increase in speed
--   cycle 2: `rev` - pattern will be reversed
--   cycle 3: `slow 2` - pattern will decrease in speed
--   cycle 4: `striate 3` - pattern will be granualized
--   cycle 5: `(# speed "0.8")` - pattern samples will be played back
+- cycle 1: `fast 2` - pattern will increase in speed
+- cycle 2: `rev` - pattern will be reversed
+- cycle 3: `slow 2` - pattern will decrease in speed
+- cycle 4: `striate 3` - pattern will be granualized
+- cycle 5: `(# speed "0.8")` - pattern samples will be played back
     more slowly
 
 After `(# speed "0.8")`, the transforms will repeat and start at
@@ -1160,7 +1179,7 @@ In previous versions of Tidal, `spread` was actually the same as
 `fastspread`. Now, `slowspread` is an alias of `spread`, but you may as
 well type the latter, as it's shorter!
 
-## toScale
+### toScale
 
 ```haskell
 toScale::[Int] -> Pattern Int -> Pattern Int
@@ -1196,7 +1215,7 @@ import qualified Sound.Tidal.Scales as Scales
 and then use them as `Scales.ionian`, `Scales.dorian`,
 `Scales.phrygian`, etc...
 
-## trunc
+### trunc
 
 ```haskell
 trunc :: Pattern Time -> Pattern a -> Pattern a
@@ -1219,7 +1238,7 @@ d1 $ trunc "<0.75 0.25 1>" $ sound "bd sn:2 [mt rs] hc"
 
 See also [linger](#linger).
 
-## zoom
+### zoom
 
 ```haskell
 zoom :: Arc -> Pattern a -> Pattern a
@@ -1246,12 +1265,12 @@ Here's an example of it being used with a conditional:
 d1 $ every 4 (zoom (0.25, 0.75)) $ sound "bd*2 hh*3 [sn bd]*2 drum"
 ```
 
-# Sample
+## Sample
 
 The following functions manipulate each sample within a pattern, some
 granularize them, others echo.
 
-## chop
+### chop
 
 ```haskell
 chop :: Pattern Int -> ParamPattern -> ParamPattern
@@ -1294,7 +1313,7 @@ d1 $ chop 32 $ sound (samples "arpy*8" (run 16))
 d1 $ chop 256 $ sound "bd*4 [sn cp] [hh future]*2 [cp feel]"
 ```
 
-You can also use chop (or (striate)\[\#striate\]) with very long
+You can also use chop (or [striate](\#striate)) with very long
 samples, to cut it into short chunks and pattern those chunks. The
 following cuts a sample into 32 parts, and plays it over 8 cycles:
 
@@ -1315,7 +1334,7 @@ d1 $ loopAt 8 $ rev $ chop 32 $ sound "bev"
 
 See also [striate](#striate).
 
-## gap
+### gap
 
 ```haskell
 gap :: Int -> ParamPattern -> ParamPattern
@@ -1339,7 +1358,7 @@ You can also provide a pattern here:
 d1 $ gap "<32 16 8 4>" $ sound "rave"
 ```
 
-## loopAt
+### loopAt
 
 `loopAt` makes sample fit the given number of cycles. Internally, it
 works by setting the `unit` parameter to "c", changing the playback
@@ -1366,7 +1385,7 @@ loopAt:
 d1 $ juxBy 0.6 (|*| speed "2") $ loopAt "<4 6 2 3>" $ chop 12 $ sound "fm:14"
 ```
 
-## striateL
+### striateL
 
 ```haskell
 striateL :: Int -> Int -> ParamPattern -> ParamPattern
@@ -1383,14 +1402,14 @@ d1 $ striateL' 3 0.125 4 $ sound "feel sn:2"
 Like `striate`, these use the `begin` and `end` parameters internally,
 as well as the `loop` parameter for these versions.
 
-## striate
+### striate
 
 ```haskell
 striate :: Pattern Int -> ParamPattern -> ParamPattern
 ```
 
 Striate is a kind of granulator, cutting samples into bits in a similar
-to (chop)\[\#chop\], but the resulting bits are organised differently.
+to [chop](#chop), but the resulting bits are organised differently.
 For example:
 
 ```haskell
@@ -1434,7 +1453,7 @@ Note that `striate` uses the `begin` and `end` parameters internally.
 This means that if you're using `striate` (or `striate'`) you probably
 shouldn't also specify `begin` or `end`.
 
-## stut
+### stut
 
 ```haskell
 stut :: Integer -> Double -> Rational -> ParamPattern -> ParamPattern
@@ -1455,7 +1474,7 @@ The above results in 4 echos, each one 50% quieter than the last, with
 d1 $ stut 4 0.5 (-0.2) $ sound "bd sn"
 ```
 
-## stut'
+### stut'
 
 ```haskell
 stut' :: Integer -> Time -> (ParamPattern -> ParamPattern) -> ParamPattern -> ParamPattern
@@ -1472,13 +1491,13 @@ d1 $ stut' 2 (1/3) (# vowel "{a e i o u}%2") $ sound "bd sn"
 In this case there are two *overlays* delayed by 1/3 of a cycle, where
 each has the `vowel` filter applied.
 
-# Synth parameters
+## Synth parameters
 
 In general, synth parameters specify patterns of sounds, and patterns
 of effects on those sounds. These are synthesis parameters you can
 use with the default SuperDirt synth or Classic Dirt:
 
-## accelerate
+### accelerate
 
 ```haskell
 accelerate :: Pattern Double -> ParamPattern
@@ -1487,7 +1506,7 @@ accelerate :: Pattern Double -> ParamPattern
 a pattern of numbers that speed up (or slow down) samples while they
 play.
 
-## bandf
+### bandf
 
 ```haskell
 bandf :: Pattern Double -> ParamPattern
@@ -1497,7 +1516,7 @@ a pattern of numbers. In SuperDirt, this is in Hz (try a range between 0
 and 6000). In classic dirt, it is from 0 to 1. Sets the center frequency
 of the band-pass filter. Has the shorthand `bpf`.
 
-## bandq
+### bandq
 
 ```haskell
 bandq :: Pattern Double -> ParamPattern
@@ -1507,7 +1526,7 @@ a pattern of numbers that set the q-factor of the band-pass filter.
 Higher values (larger than 1) narrow the band-pass. Has the shorthand
 `bpq`.
 
-## begin
+### begin
 
 ```haskell
 begin :: Pattern Double -> ParamPattern
@@ -1538,7 +1557,7 @@ d1 $ (chop 8 $ sounds "breaks125") # unit "c" # coarse "1 2 4 8 16 32 64 128"
 which performs a similar effect, but due to differences in
 implementation sounds different.
 
-## coarse
+### coarse
 
 ```haskell
 coarse :: Pattern Int -> ParamPattern
@@ -1547,7 +1566,7 @@ coarse :: Pattern Int -> ParamPattern
 fake-resampling, a pattern of numbers for lowering the sample rate, i.e.
 1 for original 2 for half, 3 for a third and so on.
 
-## crush
+### crush
 
 ```haskell
 crush :: Pattern Double -> ParamPattern
@@ -1556,7 +1575,7 @@ crush :: Pattern Double -> ParamPattern
 bit crushing, a pattern of numbers from 1 for drastic reduction in
 bit-depth to 16 for barely no reduction.
 
-## cut
+### cut
 
 ```haskell
 cut :: Pattern Int -> ParamPattern
@@ -1587,7 +1606,7 @@ d1 $ sound "[bev, [ho:3](3,8)]" # cut "-1"
 
 Using `cut "0"` is effectively *no* cutgroup.
 
-## cutoff
+### cutoff
 
 ```haskell
 cutoff :: Pattern Double -> ParamPattern
@@ -1598,7 +1617,7 @@ a pattern of numbers. In SuperDirt, this is in Hz
 Applies the cutoff frequency of the low-pass filter. Has the shorthand
 form `lpf`.
 
-## delayfeedback
+### delayfeedback
 
 ```haskell
 delayfeedback :: Pattern Double -> ParamPattern
@@ -1606,7 +1625,7 @@ delayfeedback :: Pattern Double -> ParamPattern
 
 a pattern of numbers from 0 to 1. Sets the amount of delay feedback.
 
-## delay
+### delay
 
 ```haskell
 delay :: Pattern Double -> ParamPattern
@@ -1616,7 +1635,7 @@ a pattern of numbers that set the initial level of the delay signal.
 I.e. a value of one means the first echo will be as loud as the original
 sound.
 
-## delaytime
+### delaytime
 
 ```haskell
 delaytime :: Pattern Double -> ParamPattern
@@ -1624,7 +1643,7 @@ delaytime :: Pattern Double -> ParamPattern
 
 a pattern of numbers from 0 to 1. Sets the length of the delay.
 
-## end
+### end
 
 ```haskell
 end :: Pattern Double -> ParamPattern
@@ -1633,7 +1652,7 @@ end :: Pattern Double -> ParamPattern
 the same as `begin`, but cuts the end off samples, shortening them; e.g.
 `0.75` to cut off the last quarter of each sample.
 
-## gain
+### gain
 
 ```haskell
 gain :: Pattern Double -> ParamPattern
@@ -1642,7 +1661,7 @@ gain :: Pattern Double -> ParamPattern
 a pattern of numbers that specify volume. Values less than 1 make the
 sound quieter. Values greater than 1 make the sound louder.
 
-## hcutoff
+### hcutoff
 
 ```haskell
 hcutoff :: Pattern Double -> ParamPattern
@@ -1653,7 +1672,7 @@ and 8000). In classic dirt, it is from 0 to 1. Sets the center frequency
 of the band-pass filter. Applies the cutoff frequency of the high-pass
 filter. Has the shorthand form `hpf`.
 
-## hresonance
+### hresonance
 
 ```haskell
 hresonance :: Pattern Double -> ParamPattern
@@ -1662,7 +1681,7 @@ hresonance :: Pattern Double -> ParamPattern
 a pattern of numbers from 0 to 1. Applies the resonance of the high-pass
 filter. Has the shorthand form `hpq`.
 
-## legato
+### legato
 
 ```haskell
 legato :: Pattern Double -> ParamPattern
@@ -1671,7 +1690,7 @@ legato :: Pattern Double -> ParamPattern
 Controls the length of the sound (called `sustain`) relative to its
 "space" in the pattern - the time from the beginning of one sound in the
 pattern to the beginning of the next - also known as the "inter-onset
-time"<sup>1</sup>.
+time".
 
 `legato "1"` means the sound will play for the duration of its "space"
 and then stop playing. For example
@@ -1699,7 +1718,7 @@ use the `delta` parameter to override this and control it directly. The
 user-provided `delta` will then be multiplied by `legato` (if provided)
 as normal.
 
-## loop
+### loop
 
 ```haskell
 loop :: Pattern Double -> ParamPattern
@@ -1707,7 +1726,7 @@ loop :: Pattern Double -> ParamPattern
 
 loops the sample (from `begin` to `end`) the specified number of times.
 
-## nudge
+### nudge
 
 ```haskell
 nudge :: Pattern Double -> ParamPattern
@@ -1730,7 +1749,7 @@ You can use nudge to move the timing of events into the future. Here, we schedul
 
 ```haskell
 d1 $ sound "cp*4" # nudge "0 0.7 0.2 0.4"
-	
+
 d1 $ sound "cp*4" # nudge "0 0.7 0.2 0.4"
 ```
 
@@ -1738,7 +1757,7 @@ The above example isn’t very interesting. However, when you apply a sine funct
 
 ```haskell
 d1 $ sound "cp*4" # nudge (slow 8 $ sine)
-	
+
 d1 $ sound "cp*4" # nudge (slow 8 $ sine)
 ```
 
@@ -1746,17 +1765,17 @@ Different pattern densities, scaling, and sine speeds interact with each other t
 
 ```haskell
 d1 $ sound "cp*8" # nudge (scale 0 2 $ slow 16 $ sine)
-	
+
 d1 $ sound "cp*8" # nudge (scale 0 2 $ slow 16 $ sine)
 ```
 
-## spaceOut
+### spaceOut
 
 The spaceOut function lets you specify a list of cycle speed multipliers, and then plays the pattern exactly once at each speed:
 
 ```haskell
 d1 $ spaceOut [1, 0.5, 1.33, 0.1, 2] $ sound "cp*4 cp*2"
-	
+
 d1 $ spaceOut [1, 0.5, 1.33, 0.1, 2] $ sound "cp*4 cp*2"
 ```
 
@@ -1766,7 +1785,7 @@ Where spaceOut gets a little more interesting is when you use Haskell’s list s
 
 ```haskell
 d1 $ spaceOut [1,1.1..3] $ sound "cp*4"
-	
+
 d1 $ spaceOut [1,1.1..3] $ sound "cp*4"
 ```
 
@@ -1776,7 +1795,7 @@ You can achieve speed “oscillations” that resemble a triangle wave by adding
 
 ```haskell
 d1 $ spaceOut ([0.1,0.2..3] ++ [3,2.9..0.1]) $ sound "cp*4"
-	
+
 d1 $ spaceOut ([0.1,0.2..3] ++ [3,2.9..0.1]) $ sound "cp*4"
 ```
 
@@ -1788,7 +1807,7 @@ d1 $ spaceOut (map (1/) [1,1.5..10]) $ sound "cp*4"
 d1 $ spaceOut (map (1/) [1,1.5..10]) $ sound "cp*4"
 ```
 
-## pan
+### pan
 
 ```haskell
 pan :: Pattern Double -> ParamPattern
@@ -1797,7 +1816,7 @@ pan :: Pattern Double -> ParamPattern
 a pattern of numbers between 0 and 1, from left to right (assuming
 stereo)
 
-## resonance
+### resonance
 
 ```haskell
 resonance :: Pattern Double -> ParamPattern
@@ -1806,7 +1825,7 @@ resonance :: Pattern Double -> ParamPattern
 a pattern of numbers from 0 to 1. Applies the resonance of the low-pass
 filter. Has the shorthand form `lpq`.
 
-## `room` and `size`
+### `room` and `size`
 
 ```haskell
 room :: Pattern Double -> ParamPattern
@@ -1819,7 +1838,7 @@ respectively. These are only available in SuperDirt (not classic dirt)
 and is a fully working but experimental feature which may change in the
 future.
 
-## shape
+### shape
 
 ```haskell
 shape :: Pattern Double -> ParamPattern
@@ -1828,14 +1847,15 @@ shape :: Pattern Double -> ParamPattern
 wave shaping distortion, a pattern of numbers from 0 for no distortion
 up to 1 for loads of distortion
 
-## sound
+### sound
 
 ```haskell
 sound :: Pattern String -> ParamPattern
 ```
+
 a pattern of strings representing sound sample names (required)
 
-## speed
+### speed
 
 ```haskell
 speed :: Pattern Double -> ParamPattern
@@ -1861,7 +1881,7 @@ speed.
 The behavior of `speed` can also be changed by the [`unit`
 parameter](unit).
 
-## sustain
+### sustain
 
 ```haskell
 sustain :: Pattern Double -> ParamPattern
@@ -1870,7 +1890,7 @@ sustain :: Pattern Double -> ParamPattern
 Sets the duration of the sound in seconds. Primarily used in SuperDirt
 for softsynths, but can be used for samples as well.
 
-## unit
+### unit
 
 ```haskell
 unit :: Pattern String -> ParamPattern
@@ -1890,7 +1910,7 @@ beat matching if your sample is a drum loop.
 
 With `unit "s"`, `speed` specifies the playback *length* in seconds.
 
-## vowel
+### vowel
 
 ```haskell
 vowel :: Pattern String -> ParamPattern
@@ -1899,9 +1919,9 @@ vowel :: Pattern String -> ParamPattern
 formant filter to make things sound like vowels, a pattern of either
 `a`, `e`, `i`, `o` or `u`. Use a rest (`~`) for no effect.
 
-# Transitions
+## Transitions
 
-## anticipate
+### anticipate
 
 ```haskell
 anticipate :: Time -> [ParamPattern] -> ParamPattern
@@ -1910,7 +1930,7 @@ anticipate :: Time -> [ParamPattern] -> ParamPattern
 Build up some tension, culminating in a *drop* to the new pattern after
 8 cycles.
 
-## anticipateIn
+### anticipateIn
 
 ```haskell
 anticipateIn :: Time -> Time -> [ParamPattern] -> ParamPattern
@@ -1925,7 +1945,7 @@ d1 $ sound "jvbass(3,8)"
 t1 (anticipateIn 4) $ sound "jvbass(5,8)"
 ```
 
-## clutch
+### clutch
 
 ```haskell
 clutch :: Time -> [Pattern a] -> Pattern a
@@ -1946,7 +1966,7 @@ t1 clutch $ sound "[hh*4, odx(3,8)]"
 `clutch` takes two cycles for the transition, essentially this is
 `clutchIn 2`.
 
-## clutchIn
+### clutchIn
 
 ```haskell
 clutchIn :: Time -> Time -> [Pattern a] -> Pattern a
@@ -1963,7 +1983,7 @@ t1 (clutchIn 8) $ sound "[hh*4, odx(3,8)]"
 
 will take 8 cycles for the transition.
 
-## histpan
+### histpan
 
 ```haskell
 histpan :: Int -> Time -> [ParamPattern] -> ParamPattern
@@ -1971,7 +1991,7 @@ histpan :: Int -> Time -> [ParamPattern] -> ParamPattern
 
 Pans the last n versions of the pattern across the field
 
-## jumpIn
+### jumpIn
 
 ```haskell
 jumpIn :: Int -> Time -> [ParamPattern] -> ParamPattern
@@ -1980,7 +2000,7 @@ jumpIn :: Int -> Time -> [ParamPattern] -> ParamPattern
 Does a sharp "jump" cut transition after the specified number of cycles
 have passed.
 
-## jumpIn'
+### jumpIn'
 
 ```haskell
 jumpIn' :: Int -> Time -> [ParamPattern] -> ParamPattern
@@ -1990,7 +2010,7 @@ Does a sharp "jump" cut transition after at least the specified number
 of cycles have passed, but only transitions at a cycle boundary (e.g.
 when the cycle count is an integer)
 
-## jump
+### jump
 
 ```haskell
 jump :: Time -> [ParamPattern] -> ParamPattern
@@ -2002,7 +2022,7 @@ transition*-transition.
 Variants of `jump` provide more useful capabilities, see `jumpIn` and
 `jumpMod`
 
-## jumpMod
+### jumpMod
 
 ```haskell
 jumpMod :: Int -> Time -> [ParamPattern] -> ParamPattern
@@ -2011,7 +2031,7 @@ jumpMod :: Int -> Time -> [ParamPattern] -> ParamPattern
 Does a sharp "jump" cut transition the next time the cycle count modulo
 the given integer is zero.
 
-## mortal
+### mortal
 
 ```haskell
 mortal :: Time -> Time -> Time -> [ParamPattern] -> ParamPattern
@@ -2019,7 +2039,7 @@ mortal :: Time -> Time -> Time -> [ParamPattern] -> ParamPattern
 
 Degrade the new pattern over time until it ends in silence
 
-## superwash
+### superwash
 
 ```haskell
 superwash :: (Pattern a -> Pattern a) -> (Pattern a -> Pattern a) -> Time -> Time -> Time -> Time -> [Pattern a] -> Pattern a
@@ -2041,7 +2061,7 @@ is replaced by `sound "bd [odx:2 sn/2]"` and `striate 2` is applied to
 it for 6 cycles. Afterwards `sound "bd [odx:2 sn/2]"` is played
 normally.
 
-## wait
+### wait
 
 ```haskell
 wait :: Time -> Time -> [ParamPattern] -> ParamPattern
@@ -2049,7 +2069,7 @@ wait :: Time -> Time -> [ParamPattern] -> ParamPattern
 
 Just stop for a bit before playing new pattern
 
-## wash
+### wash
 
 ```haskell
 wash :: (Pattern a -> Pattern a) -> Time -> Time -> [Pattern a] -> Pattern a
@@ -2068,7 +2088,7 @@ Note that `chop 8` is applied to `sound "feel ! feel:1 feel:2"` for 4
 cycles and then the whole pattern is replaced by
 `sound "feel*4 [feel:2 sn:2]`
 
-## xfade
+### xfade
 
 ```haskell
 xfade :: Time -> [ParamPattern] -> ParamPattern
@@ -2085,7 +2105,7 @@ t1 xfade $ sound "can*3"
 `xfade` is essentially `xfadeIn 2` so you can also specify how many
 cycles you want the transition to take:
 
-## xfadeIn
+### xfadeIn
 
 ```haskell
 xfadeIn :: Time -> Time -> [ParamPattern] -> ParamPattern
@@ -2102,9 +2122,9 @@ t1 (xfadeIn 16) $ sound "jvbass*3"
 
 Will fade over 16 cycles from "bd sn" to "jvbass\*3"
 
-# Utility
+## Utility
 
-## choose
+### choose
 
 ```haskell
 choose :: [a] -> Pattern a
@@ -2120,7 +2140,7 @@ d1 $ s "arpy*4" # n (choose [0,2,5])
 d1 $ sometimes (|+| up (choose[3, 7, 2, 9, (-3), (-7), (-9), (-2)])) $ n "~ 0 ~ 0" # s "sid"
 ```
 
-## irand
+### irand
 
 ```haskell
 irand :: Num a => Int -> Pattern a
@@ -2133,7 +2153,7 @@ irand :: Num a => Int -> Pattern a
 d1 $ sound "amencutup*8" # n (irand 8)
 ```
 
-## pequal
+### pequal
 
 ```haskell
 pequal :: Ord a => Time -> Pattern a -> Pattern a -> Bool
@@ -2143,7 +2163,7 @@ Quickly test if the first and the second given pattern are the same in
 the given number of cycles. This is more of a building block for
 higher-level tidal functions.
 
-## rand
+### rand
 
 ```haskell
 rand :: Pattern Double
@@ -2164,7 +2184,7 @@ Or to enjoy randomised `speed` from `0.5` to `1.5`, you can simply add
 d1 $ sound "arpy*4" # speed (rand + 0.5)
 ```
 
-## run
+### run
 
 ```haskell
 run :: (Num a, Enum a) => Pattern a -> Pattern a
@@ -2188,7 +2208,7 @@ The first parameter to `run` can be given as a pattern:
 d1 $ n (run "<4 8 4 6>") # sound "amencutup"
 ```
 
-## scale
+### scale
 
 ```haskell
 scale :: (Num b, Functor f) => b -> b -> f b -> f b
@@ -2222,7 +2242,7 @@ uses logarithms, don't try to scale things to zero or less!
 scalex :: (Floating b, Functor f) => b -> b -> f b -> f b
 ```
 
-## up
+### up
 
 ```haskell
 up :: Pattern Double -> ParamPattern
@@ -2236,9 +2256,9 @@ semitones, then 3 semitones, above natural pitch.
 d1 $ up "5 3" # sound "arpy"
 ```
 
-# Out of reference
+## Out of reference
 
-## e
+### e
 
 ```haskell
 e :: Int -> Int -> Pattern a -> Pattern a
@@ -2276,18 +2296,19 @@ These types of sequences use "Bjorklund's algorithm", which wasn't made for musi
 - (11,24,14) : A rhythm necklace of the Aka Pygmies of Central Africa.
 - (13,24,5) : Another rhythm necklace of the Aka Pygmies of the upper Sangha.
 
-## e'
+### e'
 
 ```haskell
 e' :: Int -> Int -> Pattern a -> Pattern a
 ```
-## distrib
+
+### distrib
 
 ```haskell
 distrib :: [Int] -> Pattern a -> Pattern a
 ```
 
-## einv
+### einv
 
 ```haskell
 einv :: Int -> Int -> Pattern a -> Pattern a
@@ -2297,7 +2318,7 @@ einv fills in the blanks left by e - e 3 8 "x" -> "x ~ ~ x ~ ~ x ~"
 
 einv 3 8 "x" -> "~ x x ~ x x ~ x"
 
-## efull
+### efull
 
 ```haskell
 efull :: Int -> Int -> Pattern a -> Pattern a -> Pattern a
@@ -2305,7 +2326,7 @@ efull :: Int -> Int -> Pattern a -> Pattern a -> Pattern a
 
 `efull n k pa pb` stacks e n k pa with einv n k pb
 
-## chunk
+### chunk
 
 ```haskell
 chunk :: Integer -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
@@ -2317,7 +2338,7 @@ chunk n f p treats the given pattern p as having n chunks, and applies the funct
 d1 $ chunk 4 (density 4) $ sound "cp sn arpy [mt lt]"
 ```
 
-## chunk'
+### chunk'
 
 ```haskell
 chunk' :: Integral a => a -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
@@ -2325,29 +2346,10 @@ chunk' :: Integral a => a -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
 
 chunk' works much the same as chunk, but runs from right to left.
 
-## smash
-```haskell
-smash :: Pattern Int -> [Pattern Time] -> ParamPattern -> Pattern ParamMap
-```
-Smash is a combination of spread and striate - it cuts the samples into the given number of bits, and then cuts between playing the loop at different speeds according to the values in the list.
+### smash'
 
-So this:
-```haskell
-d1 $ smash 3 [2,3,4] $ sound "ho ho:2 ho:3 hc"
-```
-Is a bit like this:
-```haskell
-d1 $ spread (slow) [2,3,4] $ striate 3 $ sound "ho ho:2 ho:3 hc"
-```
-This is quite dancehall:
-```haskell
-d1 $ (spread' slow "1%4 2 1 3" $ spread (striate) [2,3,4,1] $ sound
-"sn:2 sid:3 cp sid:4")
-  # speed "[1 2 1 1]/2"
-```
-
-## smash'
 ```haskell
 smash' :: Int -> [Pattern Time] -> ParamPattern -> Pattern ParamMap
 ```
+
 an altenative form to `smash` is `smash'` which will use `chop` instead of `striate`.

@@ -1,0 +1,106 @@
+setcps 0.3
+
+p "bd" $ stack
+    [ s "bd(4,9)" # gain 1
+    -- , s "hh(4,9)" # gain 1
+    -- , s "bd(3,5)"
+    -- , s "bd(4,9)"
+    ]
+
+xfade "bd" $ s "arpy*8" # n (run 8)
+
+
+p "hh" $ s "~ ~ hh:9 hh:7"
+    # gain 0.9
+    # speed 1
+
+p "hh" $ silence
+
+p "peri" $ jux rev $ s "peri ~"
+    # speed (range 0.6 1 perlin)
+
+p "mandolin" $ s "supermandolin"
+    # n "c2'maj'2"
+    # sustain 3
+    -- # delayfeedback "1"
+    -- # delay "0.5"
+
+p "mandolin" $ silence
+
+
+p "melody" $ slow 3 $ palindrome $ swingBy (5/16) 5
+    $ arp "<converge>"
+    $ n "<c4'major'5 a4'minor'3>"
+    # s "superhex"
+    # gain 0.5
+    # sustain 3
+
+p "melody" $ silence
+
+p "piano" $ slow 2
+    $ arp "<converge diverge>"
+    $ n "<c3'major'7 ~ ~ >"
+    # s "superpiano"
+    # gain (range 0.5 0.7 perlin)
+    # sustain 3
+    # delay "[0 0.5]/2" # orbit 1
+
+p "melody" $ silence
+
+d3 $ brak $ up "0*2" # sound "bev" # begin (saw/2) # release 0.2 # gain 1.3
+
+d1
+    $ superimpose (iter 32 . (|* speed (choose [1,0.5,2,1.5])))
+    $ s "bd cp hh"
+    # speed (discretise (1/8) $ choose [0.2,0.25..1])
+
+p "pat"
+  $ slow 8
+  $ segment 32
+  $ speed (smooth "[0.2 1 0.8 1.2]")
+  # s "bev(3,8)"
+  # cut 1
+
+p "pat"
+  $ jux rev
+  $ segment 32
+  $ n (every 3 smooth "[10 <13 14> <9 24>]" - 24)
+  + lpf (smooth "<100 200> <8000 1000 10000>")
+  # lpq 0.2
+  # s "supersaw"
+  # attack 0.1 # decay 1 # sustain 0.4 # release 0.1
+
+p "pat"
+  $ jux rev
+  $ fast 1
+  $ segment 32
+  $ n (smooth "[1 <96 48> 24]" - 24)
+  # s "supersaw"
+  # attack 0.1 # decay 1 # sustain 0.4 # release 0.1
+
+-- converts a list into a continuous pattern, with smooth interpolation between list elements
+listToAnalogPat :: [Double] -> Pattern Double
+listToAnalogPat xs = sig $ \t -> xs!!(ind t) + smootherStep (frac t) * (xs!!!(ind t + 1) - xs!!(ind t)) where
+  smootherStep x = 6.0 * x**5 - 15.0 * x**4 + 10.0 * x**3
+  xlen = fromIntegral (length xs)
+  ind t = floor $ (t - sam t) * xlen
+  frac t = fromRational $ (t - sam t) * xlen - fromIntegral (ind t)
+  (!!!) xs n = xs !! (n `mod` length xs)
+
+d1
+ $ slow 4
+ $ s "arpy*32"
+ # lpf (listToAnalogPat [200,500,200,1100])
+ # lpq 0.4
+
+d1 $ slow 2 $ s "supermandolin(<9 11>,16,3)" # n "{12 17 <0 9 5> 17 15 <5 9 0>}%7" # sustain 3
+
+d2 $ jux ((fast 2).(|-| n 3).(# sustain 5)) $ slow 16 $ s "superpiano superpiano/2 [~ superpiano*3]/8 ~" # n "{12 <7 5>}%5" # sustain 20
+
+d3 $ every 4 (rev) $ slow 2 $ s "ht lt/2 [kick sn]/4 bd/2" # n "{2 8 6}%3"
+
+d1 $ do (~+~) <- slow 4 $ fromList [(|+), (+|), (|+|)]
+        n "1 2" ~+~ n "3 4 5" # s "supermandolin"
+          # legato 3
+          # sustain 3
+

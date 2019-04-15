@@ -1,0 +1,5 @@
+setcps 1
+
+g "long"
+    $ s "sitar"
+    # cut 1

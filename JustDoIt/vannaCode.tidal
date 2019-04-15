@@ -1,0 +1,38 @@
+import qualified Sound.Tidal.Scales as Scales
+
+let sineInt = (\v -> truncate v) <$> sine * 10
+
+-- cps 1
+
+d1
+    $ slow 3
+    $ sometimesBy 0.25 (slow 3)
+    $ swingBy (1/8) 4
+    $ sometimesBy 0.25 (0.25<~)
+    $ sound "superpiano*5? ~ superpiano/2"
+        # midinote (toScale Scales.chromatic (sineInt + 10)+40)
+        # sustain (sine * 10 - 5)
+
+d1 $ sometimesBy 0.25 (fast 2) $ sound "bd*8"
+
+d2 $ slow 3 $ e 5 8 $ sound "bd"
+
+
+let x = (\v -> v) <$> irand 5
+
+d2
+    $ slow 4
+    $ stack [
+    sound "[bd:4 bd:3 ~ bd:5(2,5) ~]" # gain 1.4,
+    -- sound "[arpy(3,5,2)] ~ ~ arpy3" # vowel "[a o]/2" # gain 0.8,
+    -- sound "[~ ~ cp(3, 7)]/2 cp",
+    sound "[hh:3*3 ~ hh:2*2 hh:4 hh:4]" # gain 1.2
+    ]
+
+d2
+    $ slow 4
+    $ sound ["bd(4,7,3) bd ~ ~ hh" "hh ~ ~ ~ hh"]
+
+hush
+
+d1 $ sound "bd sn"

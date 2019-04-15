@@ -1,0 +1,32 @@
+cps (30/120)
+
+(freq, freq_p) = pF "freq" (Just 440)
+
+d1 $ stack [
+    freq "30 440 220 ~ 660" # s "superpiano" # sustain "5",
+    freq "~ 40 50 ~" # s "superpiano" # sustain "8" # pan "1 2 3",
+    freq "200" # s "supersaw" # cut "0" # gain "0.6"
+    ]
+
+channelMix = do v <- irand 2
+                    return $ if v == 0 then (-1) else 1
+
+-- Вытащить из монады значение для использования в чистой функции.
+
+channelMix2 = (\v -> if v == 0 then (-1) else 1) <$> irand 2
+
+d2 $ s "superpiano"
+    -- # channel channelMix
+
+d1 $ slow 3 $ ur' 6 "[ch1 ch2, ~ mel2:double]"
+    [("ch1", n "[c3, g3] [c3, g3]" # s "superpiano" # sustain "1.7" # gain "0.9"),
+    ("ch2", n "[fs3, as3] [c3, g3]" # s "superpiano" # sustain "1.7" # gain "0.9"),
+    ("mel1", n "a5 g5 c6 a5 g5 c6" # s "superpiano" # sustain "0.3" # velocity "0.9"),
+    ("mel2", n "c4 c5 g4 g5" # s "superpiano" # sustain "0.9" # velocity "0.95")]
+    [("double", density 2)]
+
+d1 $ ur 2 "[0 1]"
+    [(n "9 9 9 9" # s "bd"),
+    (n "1 1 1 1" # s "sn")]
+
+hush

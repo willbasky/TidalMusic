@@ -1,0 +1,112 @@
+d5 $ degrade $ sound "[~ latibro, odx ~, ul ul:2]"
+  # gain "0.8"
+  # room "0.6"
+  -- # speed (sine+1)
+  # sustain "2"
+  # lpf 1000
+  # lpq 0.2
+
+d6 $ every 2 rev $ shuffle 3 $ sound "[[~ ~ sundence ~ ],[ ~ tacscan], [seawolf]"
+  # gain "1"
+  # room "0.4"
+
+d1 $ iter 2 $ sound "[~ sid:3 sid:4, 808 ~ 808:2, tink ~ tink, tok ~ ~]"
+  -- # orbit "0.3"
+  # up "5 3"
+  # speed (sine + 1)
+  # gain "0.9"
+
+d2 $ brak $ spread ($) [fast 3, rev, trunc 0.5, linger 0.75] $ sound "[stab ~ ~ stomp ~, ~ peri ~ oc ~]"
+  # cut "1"
+  # speed sine
+  # lpf 1000
+  # lpq 0.1
+  # gain "0.8"
+  # loop 2
+
+hush
+d6 silence
+d1 silence
+
+d1 $ slow 3 $ brak $ shuffle 3 $ chop 3 $ s "paper"
+  # cut "1"
+
+d1 $ brak $ randslice 5 $ s "paper"
+
+d1 $ randslice 5 $ s "paper"
+
+d1 $ slow 3 $ brak $ scramble 50 $ chop 50 $ s "paper paper paper paper"
+  # cut "1"
+
+d1 $ every 8 rev $ every 4 (density 2) $ sound "bd hh sn cp"
+
+d1 $ slow 2 $ sound "bd(5,8)"
+
+d1 $ sound "rash([1 2 3 4]/3,8)"
+  |+| lpf 1000
+  |*| lpq 0.3
+
+d1 $ brak $ stack [
+  scramble 2 (sound "bd bd*2"),
+  sound "casio*2 casio:1",
+  scramble 4 (sound "drum drum:2 drum:1 drum:5")
+  ]
+
+hush
+
+d1 $ sound "bd*3 sn ~"
+    # interlace (interlace (speed (slowcat [density 2 sine, tri, saw, scale 0.5 3 sine * slow 4 saw, scale 1 3 tri])) (slow 2 (s "sid"))) (sound "rash")
+
+d1 $ brak $ chop 120 $ striate 100 $ sound "sn*8" # speed (scale 1 7 sine)
+
+d1 $ jux rev $ sound "[bd*80, sn*80]" # cutoff (scale 5000 10 $ slow 4 sine) # resonance "0.6" # crush "3 1 -2" # speed (sine/2) # cut "1"
+
+d1 $ sound "sid*4" # crush "5" # speed (sine*rand) # release "0.5 1 0.2 0.7 2" # attack (every 3 rev "0.25 0.75 0.5 1")
+
+d1 $ sound "hh*32" # cutoff (scale 300 1000 $ slow 4 sine) # resonance "0.4"
+
+d1 $ sound (samples "arpy*8" (run 8)) # speed "0.25" # cut "1"
+
+d2 $ sound (samples "bass2*6" (run 12)) # speed "0.5" # cut "1"
+
+d1 $ whenmod 8 6 (const $ sound "arpy(3,8) bd*4") $ sound "bd sn bass2 sn"
+
+d1 $ every 12 (const $ sound "bd*4 sn*2") $ sound "bd sn bass2 sn"
+
+d1 $ scramble 3 $ sound "[bd bd bd] [sn sn]"
+
+d1 $ loopAt 3 $ sound "[~ bd bd ~] ~ [bd ~ ~ [sd ~ ~ sd] ~ ~ sd]"
+
+d1 $ sound "[bd bd bd, drum hh:3 drum hh:3, sid sid sid sid sid sid]"
+
+d1 $ loopAt 2 $ sound "[bd bd bd, <[sd sd] cp>, <arpy [arpy <[arpy arpy]> arpy arpy]>, odx]"
+
+d1 $ sound "bd <arpy:1 arpy:2 arpy:3>"
+
+d1 $ sound "{bd bd bd, sn sn}"
+
+d1 $ sound "{sn sn, bd bd bd}"
+
+d1 $ sound "{~ ~ ~ ~, arpy bass2 drum notes can}"
+
+d1 $ sound "{bd hh sn cp, arpy bass2 drum notes can}"
+
+d1 $ sound "{arpy bass2 drum notes can}%3"
+
+d1 $ sound "arpy*4" # pan (scale 0 1 saw) # gain (scale 1.2 0.5 sine) # delay "1"
+
+d1 $ sound "[bd sn sn*3]/2 [bd sn*3 bd*4]/3"
+
+d1 $ sound $ samples "drum*4" "0 1 2 3"
+
+d1 $ n (run 15) # s "tink"
+
+d1 $ loopAt 2 $ n "a2 a3 a4 c3 d7" # sound "supergong" # sustain "1.5" # release "5" # attack "0.3"
+
+d1 $ jux (# accelerate "1") $ s "supermandolin*8"
+    # midinote "[80!6 78]/8"
+    # sustain "1 0.25 2 1"
+
+cps 0.3
+
+hush

@@ -1,0 +1,30 @@
+d1 $ sound "fire"  # cutoff (scale 300 1500 $ slow 3 $ sine) # resonance "0.4" # cut "1"
+
+d2 $ striate 16 $ sound "bd*3? dr2" # n "2? 3 1 2"
+
+d3 $ slow 2 $ sound "drum ~ ~ supergong drum ~ bd:5 ~"
+
+d4 silence
+
+hush
+
+
+
+d1 silence
+
+d4 $ brak $ n (slow 10 "[[c5? e5 g5? c6]*4 [b4? e5 g5? b5]*5]") # s "superpiano"
+  # velocity "[1.20 0.9 0.8 1]" # speed "0.4 1 0.3 0.7 -0.5" # gain "0.8 0.9 1 0.7 0.5"
+
+d5 $ s "alstab"
+
+brak
+
+do
+    let gainPiano = "0.8 0.7 1"
+    d1 $ s "drum ~ drum jazz ~"
+    d2 $ jux (iter 4) $ s "arpy*2 casio" # cut "1"
+
+do
+  let pat = "{1 ~ ~ 1 ~ 1*1 1 ~ ~ 1 1}%8"
+  d1 $ gain (pat) # s "bd"
+  d2 $ gain (pat) # s "arpy"

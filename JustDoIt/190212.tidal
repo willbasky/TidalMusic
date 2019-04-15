@@ -1,0 +1,33 @@
+setcps 1
+
+p "long" $ slow 6 $ stut 10 0.3 0.1
+    $ degradeBy 0.7
+    $ chop 10
+    $ s "space"
+    # room 0.1
+    # pan (slow 5 sine)
+    # lpf 900
+    # orbit 0
+
+p "rustle" $ slow 3
+    $ degradeBy 0.2
+    $ struct "1 0 0 1 1 0 1 0 1 1 1 0 0"
+    $ rot "<0 2 0 1 3 1>"
+    $ s "glitch2:1 glitch2:0 glitch2:3"
+    # gain (range 0.6 1 perlin)
+    # orbit 1
+
+p "piano" $ slow 6 $ cat [
+    n (arpg "d'minor [~ 2 5 7 5 2 ~ 2 5 7 5 2]")
+    # s "superpiano"
+    -- # sustain "1 1 1 1 1 1 1 1 1 1 1 1"
+    -- n (scale "minor" "~ ~ d6 c6 e6 ~")
+    -- # s "superpiano"
+    -- # sustain "3 1 1 1 3 3",
+    ]
+    # legato 2
+    # gain 0.7
+
+-- minor = [0,2,3,5,7,8,10]
+d1 $ slow 4 $ spaceOut "<2 3 4>" $ n "1 2 3"
+    # s "superpiano"

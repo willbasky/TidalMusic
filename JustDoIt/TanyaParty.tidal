@@ -1,0 +1,178 @@
+module TanyaParty where
+
+import Sound.Tidal.Chords
+
+setcps 0.17
+
+setcps (6/60)
+
+hush
+
+d1 $ n "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~]"
+    # s "superpiano"
+    # sustain "2 4 2 3 1 2 4 2 3 1 2 4 2 3 1 2 4 2 4"
+
+d1 $ n "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ b4 a4 ~ gs4 ~ ~ fs4 gs4 ~ a4 ~ ~ ~ ~ ~ a4 ~ ~ ~ ~ ~]"
+    # s "superpiano"
+    # sustain "2 4 2 3 1 2 4 2 3 1 2 4 1 2 3 1 2 6 6"
+
+d1 $ n "[g5 ~ ~ ~ ~ ~ g5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~ ~ ~]"
+      # s "superpiano"
+      # sustain "6 3 1 2 4 2 3 1 2 4 2 3 1 2 4 2 4"
+
+d1 $ n "[g5 ~ ~ ~ ~ ~ g5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ b4 a4 ~ gs4 ~ ~ fs4 gs4 ~ a4 ~ ~ ~ ~ ~ a4 ~ ~ ~ ~ ~]"
+      # s "superpiano"
+      # sustain "6 3 1 2 4 2 3 1 2 3 1 2 3 1 2 6 6"
+
+d2 $ note "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~ a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ b4 a4 ~ gs4 ~ ~ fs4 gs4 ~ a4 ~ ~ ~ ~ ~ a4 ~ ~ ~ ~ ~ g5 ~ ~ ~ ~ ~ g5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~ ~ ~ g5 ~ ~ ~ ~ ~ g5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ b4 a4 ~ gs4 ~ ~ fs4 gs4 ~ a4 ~ ~ ~ ~ ~ a4 ~ ~ ~ ~ ~]"
+    # sound "superpiano"
+    # sustain "2 4 2 3 1 2 4 2 3 1 2 4 2 3 1 2 4 2 4 2 4 2 3 1 2 4 2 3 1 2 4 1 2 3 1 2 6 6 6 3 1 2 4 2 3 1 2 4 2 3 1 2 4 2 4 6 3 1 2 4 2 3 1 2 3 1 2 3 1 2 6 6"
+
+d3 $ cat [
+    note "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~]"
+        # s "superpiano"
+        # sustain "2 4 2 3 1 2 4 2 3 1 2 4 2 3 1 2 4 2 4",
+    note "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ b4 a4 ~ gs4 ~ ~ fs4 gs4 ~ a4 ~ ~ ~ ~ ~ a4 ~ ~ ~ ~ ~]"
+        # s "superpiano"
+        # sustain "2 4 2 3 1 2 4 2 3 1 2 4 1 2 3 1 2 6 6",
+    note "[g5 ~ ~ ~ ~ ~ g5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~ ~ ~]"
+        # s "superpiano"
+        # sustain "6 3 1 2 4 2 3 1 2 4 2 3 1 2 4 2 4",
+    note "[g5 ~ ~ ~ ~ ~ g5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ b4 a4 ~ gs4 ~ ~ fs4 gs4 ~ a4 ~ ~ ~ ~ ~ a4 ~ ~ ~ ~ ~]"
+        # s "superpiano"
+        # sustain "6 3 1 2 4 2 3 1 2 3 1 2 3 1 2 6 6"
+    ]
+
+d1 $ stack [
+    sound "bd(3,8,4)",
+    (0.5 <~) $ sound "cp",
+    every 3 (density 3) $ (0.25 <~) $ sound "arpy*2" ]
+
+
+d1 $ every 3 rev $ every 4 (chop 4) $ stack [
+    sound "bd(3,8)",
+    (0.5 <~) $ sound "cp",
+    every 2 (density 2) $ (0.25 <~) $ sound "arpy*2" ]
+
+
+d1 $ every 3 rev $ every 4 (chop 4) $ stack [
+    sound "bd(3,8)",
+    (0.5 <~) $ sound "cp",
+    every 2 (density 2) $ (0.25 <~) $ sound "arpy*2" ]
+
+d1 $ foldEvery [3,4,2] (0.25 <~) $ sound "bd bd bd, cp cp"
+
+d1 $ every 3 (0.5 <~) $
+        every 4 (chop 4) $
+        every 5 (# speed "1.5 -1 0.5") $
+        every 6 (# crush (scale 3 8 $ slow 2 tri)) $
+        every 7 rev $
+        stack [ sound "bd(3,8)", sound "cp*2" ]
+
+pat = "{1 ~ ~ 1 ~ 1*1 1 ~ ~ 1 1}%8"
+
+d1 $ gain pat # s "bd"
+
+d2 $ gain pat # s "arpy"
+
+rip a b = within (0.25, 0.75) (slow 2 . rev . stut 8 a b)
+
+d1 $ rip 40 30 $ s "arpy cp arpy bd"
+
+brakk samps = ((|*| unit "c") . (|*| speed "8")) $ sound (samples samps (irand 30))
+
+d1 $ brakk "[arpy arpy] [drum drum] [bev]"
+
+
+d1 $ sound "supersaw*20"
+    # bandf (slow 3 $ sine * 2000)
+
+t1 (wait 3) $ sound "arpy"
+
+d1 silence
+
+d1 $ fast 5 $ interlace (sound  "bd") (sound  "arpy")
+
+d1 $ randcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
+
+d1 $ loopAt 2 $ sound "bd cp bd"
+
+d1 $ stack [
+    slow 2 $ n "g2 b22" c "sf_sine" # sustain "0.8",
+    n "~ ~ ~ c7" # "sf_tri" # sustain "0.05" # coarse "16"
+    ]
+
+
+
+
+
+setcps 1
+
+d1 $ hurry (irand 100 / 100) $ s "arpy"
+
+d1 $ s "bd ~ bd bd ~" # gain (cosine+5)
+
+d1 $ stripe 3 $ s "bd ~ ~ bd"
+
+d1 $ stack [
+    s "bd ~ ~ bd ~ ~" # gain 1,
+    rev $ s "~ ~ ~ ~ ~ hh" # sustain "1"
+    ]
+
+d1 $ hurry (toRational <$> rand) $ s "arpy"
+
+d1 $ spaceOut [1,1/2,1/3,1/4,1/5,1/6,1/7,1/8,1/9,1/10,1/11,1/13,1/13,1/15,1/16,1/17,1/18,1/19,1/20] $ s "arpy"
+
+d1 $ spaceOut (map (1/) [1..20]) $ s "cp"
+
+d1 $ spaceOut ((1/) <$> [1..20]) $ s "bd"
+
+d1 $ spaceOut [1/i | i <- [1..20]] $ s "arpy"
+
+d1 $ spaceOut (map (\ x -> 1 / x) [1..10]) $ s "psin"
+
+
+setcps (30/60)
+
+hush
+
+d3 silence
+d2 silence
+d1 silence
+
+d1 $ slow (range 1 2 sine)
+    $ s "superpiano"
+    -- # choose ["c'maj", "e'major", "d'dim"]
+    -- |+| n "[0 ~ 3 5 7 ~ 10 ~]"
+    |+| n "e'major [0,3]"
+    |+| n "<0 0 12 0 -12>*2"
+    -- |+| n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>")
+    |+| n (arpg "'sus4 [1,0,4,7,11] 'aug [2,4]")
+    -- |+| n (irand 50)
+    # legato 5
+    # pan sine
+    # gain (range 0.5 1 sine)
+    # resonance "0 0.2 0.4"
+
+freq = pF "freq" (range 70 80 $ perlin * 10)
+
+d2 $ freq
+    # s "superpiano"
+    |+| cat [
+        sometimes rev $ n "{~ e'dim'3*2, ~ a'dim'5/3 ~ ~ }%4",
+        jux (slow 2) $ n "{0 ~ 1, 3*5 4}%3 e'aur/6 ~ ~"
+    ]
+    # legato "3"
+    # gain (range 0.5 0.7 perlin)
+
+d1 $ jux (sometimes rev) $ s "{arpy*2 ~ cp ~, ~ hh*2, bd ~ bd*2}"
+    # pan (perlinWith (sine * 4) * 1000)
+    # gain (range 0.7 0.8 perlin)
+
+d3 $ slow 4 $ s "superpiano"
+    -- |+| n (arpg "a'minor [0 3 9] e'dim'7sus4'8")
+    |+| n (arpg "a'sus4 [1,0,4,7] 'aug [2,4]")
+    -- |+| n "a'm9'8 e'7sus4'8 a'dim [9, 4, 6, 0]"
+    # gain (range 0.7 0.8 perlin)
+    # legato 3
+

@@ -1,0 +1,58 @@
+setcps 0.4
+
+d1 silence
+
+d1 $ jux rev $ chunk 4 (fast 2 . (|+ n 12)) $ arp "<pinkyupdown >"
+    $ n "<a'3>"
+    # s "supermandolin"
+    # room 0.5 # sz 0.9 # orbit 1 # legato 2
+
+d2 $ chunk 3 (fast 2 . (|+ n 12)) $ off 0.125 (|+ n 12)
+    $ jux rev
+    $ arp "<converge diverge pinkyup thumbup updown>"
+    $ n "<a'maj'2 e'minor'4 f'min'5 g'maj'3>"
+    # s "superpiano"
+    # room 0.4 # sz 0.8 # orbit 2 # legato 2 # gain 0.7
+
+hush
+
+d4
+    $ slow 2
+    -- $ chop 2
+    -- $ striate 2
+    -- $ jux (hurry 1)
+    $ jux rev
+    $ jux (off 0.1  (+| n 2))
+    $ arp "<disconverge diverge pinkyup converge downup>"
+    $ cat [
+        n "<a3'maj'4 d3'major'3> "
+        , n "<f3'maj'2 g4'mimor'3 e4'm7s5'2>"
+        , n "<c5'one'3 d3'nine'2>"
+    ]
+    # s "superpiano"
+    # room 0.4 # sz 0.8 # orbit 1 # legato 2 # gain 0.55
+
+d5
+    -- $ fast "3"
+    $ jux rev
+    $ striate 15
+    $ euclid 3 5
+    $ sound "jvbass ~ ~ jvbass:4 bass:5*3 ~"
+    # sustain 5
+    # gain (range 0.5 0.9 perlin)
+    -- # n ("c e" |+ "c'minor'3 e'maj a'maj")
+
+d6
+    $ euclid 3 5 $ sound "casio casio:6"
+    # room 0.3
+    # gain (range 0.3 0.8 perlin)
+
+d6 silence
+
+d7
+    $ slow 3
+    $ brak $ sound "lt(3,5) odx"
+    # sustain 40
+    # sz 0.3
+    # gain 0.8
+

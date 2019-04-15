@@ -1,0 +1,40 @@
+d1 $ every 2 (slow 2) $ sound "sn*5" # n "1 4 2 3 [1 3]" # gain "0.65"
+
+d2 $ sound "if*" # speed "3" # gain "1" -- # crush "1"
+
+d3 $ every 3 rev $ every 4 (fast 2) $ sound "arpy*6" # up "4 1 2 3 5 7"  # n "2 3 4 3 5 1" # gain "1 0.6 0.6 0.5 0.9 0.7"
+
+d4 $ n "[1..4]" # sound "supergong(5,8,2)" # crush "4" # gain "0.9 0.7 0.5 0.8 0.3" # speed "-2 1 -0.5 0.5"
+
+d5 $ sound "bd:3"
+
+hush
+
+d1 $ every 3 (0.25<~) $ sound "bd cp ~ bd"
+
+do
+ let oh = n "~ ~ 61 ~ ~ ~ 61 ~ ~ ~ 61 ~ ~ ~ 61 ~"
+ let hh =  gain "1 0.7 1 0.7 0.7 0.7 1 0.7 1 0.7 1 0.7 0.7 0.7 1 0.7"  # n "60"
+ let clap = n "~ ~ ~ ~ 1 ~ ~ ~ ~ ~ ~ ~ 1 ~ ~ 1" # gain "0.8"
+ let snare = gain "0 0.7 0 0 1 0 0 0.7  0 0  0.7  0 1 0.7 0 0" # n "83"
+ let kick =  n "13 ~ ~ ~ 13 ~ ~ ~ 13 ~ ~ ~ 13 ~ 13 ~"
+ d2 $ slow 2 $ stack [ oh , hh, clap, snare, kick ] # s "dr660"
+
+do
+ let oh = gain "0 0 1 0 0 0 0 0 0 0 1 0 0 0 1 0" # n "61"
+ let hh =  gain "0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1"  # n "60"
+ let clap = gain "0 0 1 0 1 0 0 0 1 0 1 0 1 0 0 0" |-| gain "0.2" # n "1"
+ let snare = gain "0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0"  # n "83"
+ let kick =  gain "1 0 0.7 0 1 0 0 0 1 0 0.7 0 1 0 0 0 " # n " 16"
+ let subkick =  gain "0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 " # n " 15"
+ d2 $ slow 2 $ stack [ oh , hh, clap, snare, kick, subkick ] # s "bn"
+
+d1 silence
+d2 silence
+d3 silence
+d4 silence
+d5 silence
+d6 silence
+
+d1 $ jux (iter 4) $ sound "arpy arpy:2*2"
+  |+| speed (slow 4 $ scale 1 1.5 sine1)

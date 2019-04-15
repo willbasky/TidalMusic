@@ -1,0 +1,25 @@
+
+
+p "start" $ slow 7 $ stut 8 0.5 0.2 $ s "sitar*2 sitar:1"
+    -- # delay 1
+    -- # orbit 1
+    # cut 8
+    # gain "0.7 1"
+    # n "~ c4 ~ a4 ~ e2 ~"
+
+p "start" $ silence
+
+p "duck" $ chop 12 $ slow 6
+    $ stutWith (irand 3) (1/6) (|* speed "1.5")
+    $ s "~ ~ wind:1 wind? ~ wind"
+    # cut 6
+
+p "duck" $ silence
+
+p "echo" $ slow 2
+    $ juxBy 5 rev
+    $ brak
+    $ sound "~ gretsch(1,3) ~ gretsch:2 glitch2*2? ~? ~"
+
+p "echo" $ silence
+
