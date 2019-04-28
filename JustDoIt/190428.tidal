@@ -1,0 +1,60 @@
+
+let meter = "0 1(3,8) 0(3,8)"
+
+let meter2 = "0 1 0*2 1*2"
+
+p "break"
+    -- $ chop 16
+    -- $ loopAt 1
+    $ chunk 4 (hurry 2)
+    $ off 0.25 (+6)
+    $ struct (slow 2 meter2)
+    $ s "hh ab"
+    # speed "<1.2 1.1 1 0.9>"
+
+p "struct"
+    $ slow 2
+    $ chunk 4 (ghost)
+    $ fix rev (n "0")
+    $ layer [every 2 $ struct (slow 2 meter2), id]
+    $ n "0 4 1 0"
+    # s "bass bass3"
+    # speed "<1 1.1 1.2 1.3>"
+
+p "every"
+    $ every 2 (# speed 2)
+    $ every 3 (# speed 3)
+    -- $
+    $ s "bd"
+
+d1 $ slow 2 $
+    n (off 0.25 (+3) $ off 0.125 (+7) $ slow 2 "c(3,8) a(3,8,2) f(3,8) e(3,8,4)")
+    # sound "superpiano"
+
+d1 $ superimpose (fast 2) $ sound " ~ bd hh"
+
+d1 $ layer [id, every 3 rev, every 2 (fast 2)] $ sound " ~ bd hh"
+
+p "if"
+    $ slow 3
+    $ ifp ((== 0) . (flip mod 2))
+        -- ((speed "<1 1.1 1.2 1.3>") . ply 3)
+        ((* speed (1 + sine)) . ply 6)
+        ((+ speed (1 - sine)) . ply 5)
+        -- (jux rev)
+    $ n "1"
+    # sound "bass"
+    + n $ slow 2 "<1 2>"
+
+p "voice" silence
+
+p "voice"
+    $ chunk 4 ((# speed "<1 1.1 1.2 1.3>") . hurry 2 . ply 2)
+    $ iter 3
+    $ 0.125 <~ (chop 16 $ loopAt 5 $ s "ade")
+    # n "<0 1 2 3>"
+    -- + n "2"
+
+p "voice"
+    -- $ iter 4
+    $ loopAt 12 $ s "bev"
