@@ -1,4 +1,4 @@
-setcps (5/60)
+setcps (1/60)
 
 hush
 
@@ -8,7 +8,7 @@ d2 $ note "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ 
 
 -- with cat function
 
-setcps (2/30)
+setcps (1/40)
 
 d3 $ cat [
     note "[a4 ~ c5 ~ ~ ~ d5 ~ e5 ~ ~ f5 e5 ~ d5 ~ ~ ~ b4 ~ g4 ~ ~ a4 b4 ~ c5 ~ ~ ~ a4 ~ a4 ~ ~ gs4 a4 ~ b4 ~ ~ ~ gs4 ~ e4 ~ ~ ~]"
@@ -24,3 +24,4 @@ d3 $ cat [
         # s "superpiano"
         # sustain "6 3 1 2 4 2 3 1 2 3 1 2 3 1 2 6 6"
     ]
+

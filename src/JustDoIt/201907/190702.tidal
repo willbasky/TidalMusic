@@ -1,0 +1,45 @@
+jungle_bd =
+    [ "[1 0 0 0] [0 1 0 0]"
+    , "[1 0 0 1] [0 0 0 0]"
+    , "[0 1 0 0] [1 0 0 0]"
+    ]
+
+jungle_sn =
+    [ "[0 0 1 0] [0 0 1 0]"
+    , "[0 1 0 0] [0 1 0 1]"
+    , "[0 0 1 0] [0 1 [0 1]/2 [0 1]/2]"
+    ]
+
+jungle_ch = "[1 1 1 1] [1 1 1 1]"
+
+jungle_oh = "[0 0 0 1] [0 0 1 0]"
+
+
+p "rhythm_bd" $ iter 4 $ struct (jungle_bd !! 1) $ s "mt:8" # gain (slow 3 $ range 0.7 0.9 sine)
+
+p "rhythm_sn" $ iter 4 $ struct (jungle_sn !! 2) $ s "sn:2" # gain (slow 3 $ range 0.7 0.9 cosine)
+
+p "rhythm_ch" $ struct jungle_ch $ s "hh" # speed (slow 3 $ range 0.7 2 sine)
+
+p "rhythm_oh" $ every 4 (hurry sine) $ struct jungle_oh $ s "hh:9" # gain (slow 3 $ range 0.7 1 cosine)
+
+
+cps 1
+
+comedancing_bd = [
+  "[1 0 0 0][0 0 0 1][1 0 0 0][0 0 0 1]" ,
+  "[1 0 1 0][0 1 0 1][1 0 0 0][0 0 0 1]"
+  ]
+
+comedancing_sn = [
+  "[0 1 1 0][1 1 1 0][0 1 1 0][1 1 1 0]" ,
+  "[0 1 0 0][1 1 0 0][0 1 0 0][1 1 1 0]"
+  ]
+
+comedancing_ch = "1(8,16)"
+
+p "rhythm_bd" $ slow 2 $ struct (comedancing_bd !! 0) $ s "mt" # gain (slow 3 $ range 0.7 1 sine)
+
+p "rhythm_sd" $ slow 2 $ struct (comedancing_sn !! 1) $ s "sn:1" # gain (slow 3 $ range 0.7 1 cosine)
+
+p "rhythm_ch" $ slow 2 $ struct comedancing_ch $ s "hh"

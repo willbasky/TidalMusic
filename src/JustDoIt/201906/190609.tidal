@@ -1,0 +1,49 @@
+d1 $ degradeBy 0.1 $ slow 1 $ sound "jvbass*32" # gain (slow 6 $ range 1 2 sine)
+
+d2 $ slow 2
+    -- $ iter (irand 4)
+    -- $ degradeBy 0.1
+    $ struct "1*2 0 [1 1] [0 1 0] 0 1 0" $ sound "808mc"
+
+d3 $ note (scale "major minor" $ snowball 4 (+) (slow 3 . rev) $ (run 6)) # sound "cyclo" # slow 3 (speed sine + 1) # legato 1
+
+d1 silence
+
+d1 $ n (scale "majPent" $ snowball 4 (+) (slow 5 . rev) $ (run 3)) # sound "superpiano"
+
+d1 $ slow 2 $ n (arp "<up diverge>" "<a'm9'8 e'7sus4'8>") # sound "superpiano" # slow 3 (gain sine)
+
+p "rythms"
+    $ stack [
+        struct "1 0 1 0 0"
+            $ slow 2
+            $ degradeBy 0.3
+            $ sound "perc"
+            # n "<5>"
+            # slow 3 (speed (range 0.2 1 sine))
+            # slow 2 (gain $ range 0.5 0.9 sine)
+            -- # pan cosine
+    , degrade $ iter 5 $ struct "1 1 0 0 1 0 0 0" $ sound "v" # n "1" # slow 3 (gain cosine + 0.7)
+    , every 3 (linger "<0.25 0.5 1>") $ loopAt "<4>" $ chop 12 $ s "fm" # n "<4>" # slow 3 (gain (range 0.7 1 cosine))
+    ]
+
+p "wave"
+    $ loopAt "<6 3 5>"
+    $ s "ade" # n "<0 1 2 3>"
+    # slow 4 (speed (range 0.5 3 sine))
+    # slow 3 (gain (range 0.8 1 cosine))
+
+d1 $ trunc 0.75 $ sound "bd sn*2 cp hh*4 arpy bd*2 cp bd*2"
+
+d1 $ trunc "<0.75 0.25 1>" $ sound "bd sn:2 [mt rs] hc"
+d1 $ trunc "<0.75 0.25 1>" $ sound "bd sn:2 [mt rs] hc"
+
+d1 $ linger 0.25 $ n "0 2 [3 4] 2" # sound "arpy"
+
+d1 $ every 4 (linger 0.25) $ n "0 2 [3 4] 2" # sound "arpy"
+
+d1 $ every 2 (linger 0.25) $ loopAt 2 $ chop 8 $ sound "breaks125"
+
+d1 $ every 3 (linger "<0.25 0.5 1>") $ sound "bd sn:2 [mt rs] hc"
+
+d1 $ every 2 (linger "<0.25 0.5 1>") $ loopAt 2 $ chop 8 $ sound "breaks125"

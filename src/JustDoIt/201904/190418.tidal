@@ -35,7 +35,7 @@ p "pebby"
   $ slow 10
   -- $ sometimes ghost
   $ striate' 24 (1/16)
-  $ sometimes ply 2
+--   $ sometimes ply 2
   $ s "pebbles"
   # pan (slow 3 $ range 0 1 sine)
   # gain (slow 3 $ range  0.6 0.8 sine)

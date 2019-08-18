@@ -1,0 +1,7 @@
+resolver: lts-13.19
+
+ghc-options:
+  "$locals": -fhide-source-paths
+
+extra-deps:
+  - tidal-1.3.0

@@ -1,0 +1,32 @@
+
+
+
+p "pattern"
+    $ s "bd bd" -| s "cp"
+
+d1 $ n ("1 6" |* "2 3")
+  # sound "superpiano"
+--   # legato 2
+
+d1 $ euclid "<3 5>" "[8 4]/4" $ s "bd hh"
+
+d1 $ note (scale "minor major" $ snowball 4 (+) (slow 3 . rev) $ (run 6)) # sound "cyclo" # gain 0.8 # legato 2
+
+p "MotherPopcorn" $ slow 2 $ stack
+    [ struct "[1 0 1 0][0 0 0 0][0 0 1 0][0 0 0 0]" $ s "bd"
+    , struct "[0 0 1 0][0 0 1 0][0 0 1 0][0 0 1 0]" $ s "bd"
+    , struct "[0 0 0 0][1 0 0 1][0 1 0 0][0 0 1 0]" $ s "sn"
+    , struct "[0 1 0 1][1 1 0 1][0 1 0 1][1 1 0 1]" $ s "sn"
+    ]
+
+p "jungle" $ slow 1 $ stack
+    [ struct "[1 0 0 0] [0 1 0 0]" $ s "bd"
+    -- , struct "[1 0 0 1] [0 0 0 0]" $ s "bd"
+    -- , struct "[0 1 0 0] [1 0 0 0]" $ s "bd"
+    -- , struct "[0 0 1 0] [0 0 1 0]" $ s "sn"
+    -- , struct "[0 1 0 0] [0 1 0 1]" $ s "sn"
+    , struct "[0 0 1 0] [0 1 [0 1]/2 [0 1]/2]" $ s "sn"
+    , struct "[1 1 1 1] [1 1 1 1]" $ s "hh"
+    , struct "[0 0 0 1] [0 0 1 0]" $ s "cp:1"
+    ]
+

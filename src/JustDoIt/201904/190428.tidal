@@ -36,17 +36,16 @@ d1 $ superimpose (fast 2) $ sound " ~ bd hh"
 d1 $ layer [id, every 3 rev, every 2 (fast 2)] $ sound " ~ bd hh"
 
 p "if"
-    $ slow 3
+    $ slow 1
     $ ifp ((== 0) . (flip mod 2))
         -- ((speed "<1 1.1 1.2 1.3>") . ply 3)
         ((* speed (1 + sine)) . ply 6)
         ((+ speed (1 - sine)) . ply 5)
         -- (jux rev)
     $ n "1"
-    # sound "bass"
-    + n $ slow 2 "<1 2>"
+    # s "bass"
 
-p "voice" silence
+-- p "voice" silence
 
 p "voice"
     $ chunk 4 ((# speed "<1 1.1 1.2 1.3>") . hurry 2 . ply 2)
@@ -55,6 +54,17 @@ p "voice"
     # n "<0 1 2 3>"
     -- + n "2"
 
-p "voice"
+p "beat"
+    $ slow 1
     -- $ iter 4
-    $ loopAt 12 $ s "bev"
+    -- $ (<~) 0.125
+    $ stack
+        [ s "bd"
+        -- , s "bd cp hh"
+        -- , s "hh:3 hh"
+        , s "hh" # n "<2 3 4>"
+        -- , s "hh:4 bd arpy"
+        -- , s "hh:5"
+        ]
+
+hush

@@ -1,0 +1,11 @@
+
+p "search"
+  -- $ slow 1
+  $ loopAt (irand 3 + 2)
+  $ n "2"
+  # s "tacscan"
+
+p "shoroh"
+  $ slow 2
+  $ iter 2
+  $ sz "[ulgab:1 ~ ulgab:2 ~] ~ casio:4 casio:3"
