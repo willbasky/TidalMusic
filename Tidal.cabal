@@ -7,7 +7,7 @@ homepage:            https://github.com/willbasky/TidalMusic
 license:             MIT
 license-file:        LICENSE
 author:              willbasky
-maintainer:          vladislav.sabanov@gmail.com
+maintainer:          willbasky
 copyright:           2019 willbasky
 category:            Media
 build-type:          Simple
