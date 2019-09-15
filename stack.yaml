@@ -4,4 +4,4 @@ ghc-options:
   "$locals": -fhide-source-paths
 
 extra-deps:
-  - tidal-1.3.0
+  - tidal-1.4.0
