@@ -1,0 +1,47 @@
+p "ah"
+  -- $ slow (range 2 3 sine)
+  -- $ chop 10
+  -- $ striate' 32 (1/16)
+  -- $ iter 3
+  -- $ striate 4
+  -- $ every 1 (fast 3)
+  -- $ segment (irand 3)
+  -- $ jux (fast 4)
+  -- $ echo 4
+  $ stut 4 0.5 0.1
+  $ loopAt (irand 5 + 4)
+  -- $ every 1 (struct "1 0 1 0 0 1")
+  $ s "lc"
+  # gain 0.5
+  # speed (slow 7 $ range 0.5 1 sine)
+  -- # lpf 1000
+  -- # ring 0.5
+  # pan (slow 7 $ sine)
+
+p "ah" silence
+p "low" silence
+p "slist" silence
+
+p "low"
+  $ degradeBy 0.3
+  $ iter (irand 4)
+  $ struct "1 0 0 1 0 1"
+  $ s "~ lc:2"
+  # gain 1
+  # pan (slow 10 $ sine)
+
+p "slist"
+  -- $ stutWith 3 (1/3) (# vowel "{a e i o u}%2")
+  -- $ slow 3
+  $ degradeBy 0.3
+  -- $ iter 3
+  -- $ ply 10
+  -- $ every 3 (loopAt 2)
+  $ ((# speed (irand 1 + sine)) . ply (irand 5 + 1))
+  -- $ striate 10
+  -- $ every 4 (struct "1 0 0 1 0 1")
+  -- $ chop 12
+  $ s "lc:4"
+  # gain "0.4 0.3 0.2"
+  # pan (slow 7 $ sine)
+  -- # shape (range 0 0.5 sine)

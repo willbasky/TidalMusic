@@ -6,20 +6,18 @@ import Sound.Tidal.Context
 
 
 -- OSCTarget for pattern visualizing.
-patternTarget = OSCTarget { oName = "Pattern handler", oAddress = "127.0.0.1", oPort = 5050, oPath = "/trigger/something", oShape = Nothing, oLatency = 0.02, oPreamble = [], oTimestamp = BundleStamp }
+let patternTarget = OSCTarget { oName = "Pattern handler", oAddress = "127.0.0.1", oPort = 5050, oPath = "/trigger/something", oShape = Nothing, oLatency = 0.02, oPreamble = [], oTimestamp = BundleStamp }
 
 -- OSCTarget for play music via SuperCollider.
-musicTarget = superdirtTarget { oLatency = 0.1, oAddress = "127.0.0.1", oPort = 57120 }
+let musicTarget = superdirtTarget { oLatency = 0.1, oAddress = "127.0.0.1", oPort = 57120 }
 
-config = defaultConfig {cFrameTimespan = 1/20}
+let config = defaultConfig {cFrameTimespan = 1/20}
 
 -- Send pattern as osc both to SC and vis
--- tidal <- startMulti [musicTarget, patternTarget] config
+tidal <- startMulti [musicTarget, patternTarget] config
 
 -- Send pattern as osc to SC only
-tidal <- startTidal musicTarget config
-
-
+-- tidal <- startTidal musicTarget config
 
 
 let p = streamReplace tidal
@@ -69,3 +67,4 @@ let d15 = p 15
 let d16 = p 16
 
 :set prompt "tidal> "
+

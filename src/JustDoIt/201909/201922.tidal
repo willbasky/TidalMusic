@@ -1,0 +1,30 @@
+
+p "lc9" $ s "lc9"
+p "lc9" $ s "lc9:1"
+p "lc9" $ s "lc9:2"
+p "lc9" $ s "lc9:3"
+p "lc9" $ s "lc9:4"
+p "lc9" $ s "lc9:5"
+
+p "lc9" $ silence
+
+p "wave"
+  $ slow 3
+  $ stut 3 0.5 0.1
+  $ loopAt (irand 6)
+  $ chop (irand 2)
+  -- $ struct (binary 3)
+  $ s "lc9@1"
+  # speed (slow 4 sine)
+
+p "beats"
+  $ slow 3
+  $ loopAt 4
+  $ degradeBy 0.5
+  $ struct (binary 163)
+  $ s "lc9:1@1"
+  # speed (slow 5 $ range (-0.3) 0.5 sine)
+
+p "beats" $ silence
+p "wave" silence
+

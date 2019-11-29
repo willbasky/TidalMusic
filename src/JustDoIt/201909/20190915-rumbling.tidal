@@ -2,20 +2,26 @@ setcps (1/6)
 
 p "wave"
   $ loopAt 0.5
-  $ struct (binaryN 13 734)
+  $ struct (binaryN 16 734)
   $ sound "v"
   # speed (slow 10 $ range 0.5 1 sine)
   # gain (slow 3 $ range 0.5 0.8 perlin)
   -- # real 1
+  -- # tsdelay 1
+
+p "wave" $ silence
 
 
 p "peek"
   $ struct (binary 3)
-  $ struct (ascii "<t a x>")
+  $ struct (ascii "<t a x i>")
   $ sound "uxay:2"
   # speed (slow 4 $ range 0.1 0.3 $ perlin2 3)
   # pan (slow 5 sine)
-  # xsdelay 1
+  -- # xsdelay 1
+  -- # real 1
+
+p "peek" $ silence
 
 -- d1 $ s "bd cp hh" # xsdelay 1
 
