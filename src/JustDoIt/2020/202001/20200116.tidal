@@ -16,9 +16,13 @@ p "3"
   -- $ soak 2 (+ speed 0.5)
   -- $ linger 0.75
   $ within (0.75, 1) (fast 2)
-  $ degradeBy 0.08
+  $ degradeBy 0.09
   $ loopAt 2
   $ chop 20
   $ s "arp:2"
 
-
+p "4"
+  $ spin 2
+  $ struct (iter 4 "t(5,8)")
+  $ s "909"
+  # speed (slow 4 $ range 0.5 1.5 sine)

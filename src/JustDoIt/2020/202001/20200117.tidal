@@ -1,0 +1,11 @@
+p "1"
+  -- $ degradeBy 0.1
+  -- $ every 9 (ply 2)
+  $ foldEvery [3, 10] (degradeBy 0.1 . chop 15)
+  $ soak 2 ( (* speed 0.8))
+  -- $ repeatCycles 3
+  $ struct (iter' "4" "t(5,8)")
+  -- $ linger "<1 0.75 0.3>"
+  $ s "808cy" # n "<4 3 1>"
+
+d1 $ when (const True) (jux (struct "t(5,8)")) $ sound "808bd:6 808bd:19"
