@@ -1,0 +1,6 @@
+
+d1 $ whenmod 5 4 (const silence) (sound "bd sn")
+
+d1 $ s "bd"
+
+hush

@@ -1,0 +1,38 @@
+d1 $ jux rev
+  $ fix (# speed (range 0.5 7 sine)) (n "[e1,e4,e5]")
+  -- $ n (arp "<diverge>" "<a3'm9'5 e3'7sus4'4>")
+  $ sound "supermandolin"
+  # legato 2
+  # room (slow 4 $ range 0 0.2 saw)
+  # squiz "<1 2.5 2>"
+  -- # delaytime (range 0.01 0.3 $ slow 4 sine) # delay "0.5"
+  -- # speed (range 0.5 7 sine)
+  # cps 1
+
+
+
+d1 $ s "drum*4 [drum:1 drum:2/2]" # delaytime (range 0.01 0.3 $ slow 4 sine) # delay "0.5"
+
+d1 $ chunk 4 (|- note 5) $ jux rev $
+  arp "<pinkyup down thumbup up>" $ n "<c'maj'4 e4'min'8 f4'maj'4>"
+  # sound "supermandolin"
+  # sustain 2 # room 0.3 # sz 0.9
+
+d1 $ every 2 ("<0.25 0.125 0.5>" <~) $ sound "bd*2 [[~ lt] sn:3] lt:1 [ht mt*2]"
+  # squiz "<1 2.5 2>"
+  # room (slow 4 $ range 0 0.2 saw)
+  # sz 0.5
+  # orbit 1
+
+
+d1 $ every 2 (0.25 <~) $ sound "bd*2 [[~ lt] sn:3] lt:1 [ht mt*2]"
+
+d2 $ juxBy 0.5 rev $ chunk 4 ((+ speed (1 + sine)) . ply 8) $ note "3(3,8)" # sound "bass"
+  # speed "<2 4>"
+  # legato 1
+
+d1 $ n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>") # sound "superpiano"
+
+p "cpsfun" $ s "bd sd(3,8)" # cps (slow 8 $ 0.5 + saw)
+
+hush

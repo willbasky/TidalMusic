@@ -1,4 +1,4 @@
-cabal-version:       2.0
+cabal-version:       2.4
 name:                Tidal
 version:             0.0.0.0
 synopsis:            See README for more info
@@ -6,14 +6,14 @@ description:         See README for more info
 homepage:            https://github.com/willbasky/TidalMusic
 license:             MIT
 license-file:        LICENSE
-author:              willbasky
-maintainer:          willbasky
+author:              Vladislav
+maintainer:          Vladislav
 copyright:           2019 willbasky
 category:            Media
 build-type:          Simple
 extra-doc-files:     README.md
                    , CHANGELOG.md
-tested-with:         GHC == 8.6.4
+tested-with:         GHC == 8.8.4
 
 source-repository head
   type:                git
@@ -22,7 +22,7 @@ source-repository head
 library
   hs-source-dirs: src
 
-  build-depends:       base ^>= 4.12.0.0
+  build-depends:       base ^>= 4.14.0.0
                      , tidal
 
   -- ghc-options:         -Wall

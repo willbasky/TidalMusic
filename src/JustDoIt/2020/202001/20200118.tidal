@@ -7,7 +7,9 @@ p "piano"
   $ degradeBy "<0.2 0.1>"
   $ (# gain (slow 3 $ range 0.6 1 perlin))
   $ struct (sometimesBy 0.3 (shuffle 11) "1@3 0 1@3 0 0 1@5 0 0 0 1@4 0")
-  $ n (scale "indian" $ sometimesBy 0.25 (scramble 7) "0..6" ) |+ n "< -12 -8>"
+  $ n (scale "purvi" $ sometimesBy 0.25 (scramble 7) "0..6" ) |+ n "< -12 -8>"
   # sound "superfork"
   # room 0.2
   # legato (range 1.5 2.5 $ irand 3)
+
+hush
