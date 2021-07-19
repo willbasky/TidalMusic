@@ -4,8 +4,8 @@ version:             0.0.0.0
 synopsis:            See README for more info
 description:         See README for more info
 homepage:            https://github.com/willbasky/TidalMusic
-license:             MIT
-license-file:        LICENSE
+license:             UNLICENSE
+license-file:        UNLICENSE
 author:              Vladislav
 maintainer:          Vladislav
 copyright:           2019 willbasky
