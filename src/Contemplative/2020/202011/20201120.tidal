@@ -18,6 +18,8 @@ d1 $ chunk 4 (|- note 5) $ jux rev $
   # sound "supermandolin"
   # sustain 2 # room 0.3 # sz 0.9
 
+d1 silence
+
 d1 $ every 2 ("<0.25 0.125 0.5>" <~) $ sound "bd*2 [[~ lt] sn:3] lt:1 [ht mt*2]"
   # squiz "<1 2.5 2>"
   # room (slow 4 $ range 0 0.2 saw)
@@ -32,6 +34,10 @@ d2 $ juxBy 0.5 rev $ chunk 4 ((+ speed (1 + sine)) . ply 8) $ note "3(3,8)" # so
   # legato 1
 
 d1 $ n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>") # sound "superpiano"
+
+d1 silence
+
+hush
 
 p "cpsfun" $ s "bd sd(3,8)" # cps (slow 8 $ 0.5 + saw)
 

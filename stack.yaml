@@ -1,7 +1,7 @@
-resolver: lts-17.4
+resolver: lts-19.7
 
 ghc-options:
   "$locals": -fhide-source-paths
 
 extra-deps:
-  - tidal-1.7.2
+  - tidal-1.8.0

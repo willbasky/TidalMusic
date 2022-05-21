@@ -1,0 +1,27 @@
+
+p "wave" silence
+
+p "wave"
+  $ iter 4
+  $ s "birds3:3/5 ~ birds3:16/2 ~ birds:7/5 ~ birds:9/9"
+
+p "beat" silence
+
+p "beat"
+  $ spread slow [2,5]
+  $ s "ades2:3/2 ~ bin:1/3 ~ bin:0 ~ ~ ~ bleep:0/6 ~ bleep:7/3"
+
+p "perlin" silence
+
+p "perlin"
+  $ s "birds3:1*30"
+  # cutoff (perlinWith (saw * 3) * 1000)
+
+p "crackers" silence
+
+p "crackers"
+  $ iter 8
+  $ rot 3
+  $ s "bottle:4/7 ~ ~ bottle:6/2 ~ ~ bottle:12/3 bottle:5/5"
+
+hush

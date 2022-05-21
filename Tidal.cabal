@@ -4,8 +4,8 @@ version:             0.0.0.0
 synopsis:            See README for more info
 description:         See README for more info
 homepage:            https://github.com/willbasky/TidalMusic
-license:             Unlicense
-license-file:        UNLICENSE
+license:             BSD-3-Clause
+license-file:        LICENSE
 author:              Vladislav
 maintainer:          Vladislav
 copyright:           2019 willbasky
@@ -22,7 +22,7 @@ source-repository head
 library
   hs-source-dirs: src
 
-  build-depends:       base ^>= 4.14.0.0
+  build-depends:       base ^>= 4.15.1.0
                      , tidal
 
   -- ghc-options:         -Wall

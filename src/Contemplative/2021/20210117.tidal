@@ -24,6 +24,8 @@ p "tresillo"
     , sound "[jungle:6 ~ ~ ~ jungle:6 ~ ~ ~ jungle:6 ~ ~ ~ jungle:6 ~ ~ ~]"
     ]
 
+p "bombo note 3/2 clave" silence
+
 p "bombo note 3/2 clave"
   $ slow 1.1
   $ stack
@@ -45,19 +47,24 @@ p "bombo note 3/2 clave"
 -- xfade 6
 -- xfadeIn 1 6
 -- wait 1 2
+
+p "3/2 son clave with ponche" silence
+
 p "3/2 son clave with ponche"
   $ slow 1.1
   $ stack
     [ sound "[cp:5 ~ ~ cp:5 ~ ~ cp ~ ~ ~ cp:5 ~ cp:5 ~ ~ ~]"
-    -- , sound "[909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~]"
+    , sound "[909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~]"
     , sound "[jungle:6 ~ ~ ~ jungle:6 ~ ~ ~ jungle:6 ~ ~ ~ jungle:6 ~ ~ ~]"
     ]
 
 -- xfade 4
+p "Cinquillo" silence
+
 p "Cinquillo"
   $ slow 1.7
   $ stack
     [ sound "[cp ~ cp:5 cp:5 ~ cp:5 cp:5 ~ cp ~ cp:5 cp:5 ~ cp:5 cp:5 ~]"
-    -- , sound "[909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~]"
+    , sound "[909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~ 909 ~ ~ ~]"
     , sound "[jungle:6 ~ ~ ~ jungle:6 ~ ~ ~ jungle:6 ~ ~ ~ jungle:6 ~ ~ ~]"
     ]
