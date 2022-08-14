@@ -1,7 +1,15 @@
-resolver: lts-19.7
+resolver: lts-19.16
 
 ghc-options:
   "$locals": -fhide-source-paths
 
 extra-deps:
   - tidal-1.8.0
+  - git: https://github.com/willbasky/konnakol-gsoc
+    commit: f313e73b7065c677ecbf0b6da8684ef099c88c88
+
+# setup-info:
+#   ghc:
+#     linux64-tinfo6:
+#       9.0.2:
+#         url: "https://downloads.haskell.org/ghc/9.0.2/ghc-9.0.2a-x86_64-fedora27-linux.tar.xz"

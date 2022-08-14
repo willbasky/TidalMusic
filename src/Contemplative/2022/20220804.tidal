@@ -1,0 +1,16 @@
+import Konnakol.Define
+import System.Random ( mkStdGen)
+
+d1 $ jux (fast 2) $ (tidalM Khanda rupaka Khanda (mkStdGen 1324)) # gain 1.6
+
+d1 $ jux (fast 2) $ (tidalM Misra dhruva Misra (mkStdGen 134)) # gain 1.6
+
+do
+  resetCycles
+  d1 $ jux (fast 2) $ (tidalK Chaturasra thriputa Chaturasra (mkStdGen 12442)) # gain 1.3
+
+d2 $ sound "bd sd ~ sd" # gain 1
+
+d5 $ sound "arpy(<3 5>, 8)" # gain 1.1
+
+hush
